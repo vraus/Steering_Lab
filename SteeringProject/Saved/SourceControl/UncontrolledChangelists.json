@@ -30,7 +30,9 @@
 				"C:/Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Blueprints/Datas/Interfaces/BPI_W_BehaviourControls.uasset",
 				"C:/Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/LevelPrototyping/Materials/MI_PrototypeGrid_Gray_02_Inst.uasset",
 				"C:/Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Blueprints/Input/Actions/IA_Zoom.uasset",
-				"C:/Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Blueprints/Input/Actions/IA_ResetZoom.uasset"
+				"C:/Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Blueprints/Input/Actions/IA_ResetZoom.uasset",
+				"C:/Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Parameters.uasset",
+				"C:/Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Sliders.uasset"
 			]
 		}
 	]

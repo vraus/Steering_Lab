@@ -13813,3 +13813,412 @@ Sampler Limit: 32
 [2025.01.13-11.25.07:695][351]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
 [2025.01.13-11.25.07:695][351]AssetCheck: /Game/SteeringLab/Maps/MAP_SteeringLab Validating asset
 [2025.01.13-11.25.14:880][702]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5031.109863
+[2025.01.13-11.25.30:265][ 74]LogWorld: UWorld::CleanupWorld for World_14, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.30:265][ 74]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.30:273][ 74]LogWorld: UWorld::CleanupWorld for World_13, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.30:273][ 74]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.30:346][ 74]LogUObjectHash: Compacting FUObjectHashTables data took   1.29ms
+[2025.01.13-11.25.31:200][147]LogWorld: UWorld::CleanupWorld for World_91, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.31:200][147]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.31:208][147]LogWorld: UWorld::CleanupWorld for World_90, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.31:208][147]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.31:296][147]LogUObjectHash: Compacting FUObjectHashTables data took   1.42ms
+[2025.01.13-11.25.32:305][240]LogWorld: UWorld::CleanupWorld for World_4, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.32:306][240]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.32:535][240]LogUObjectHash: Compacting FUObjectHashTables data took   1.35ms
+[2025.01.13-11.25.33:593][338]LogActorComponent: UnregisterComponent: (/Engine/Transient.EditorFloorComp) Not registered. Aborting.
+[2025.01.13-11.25.33:593][338]LogWorld: UWorld::CleanupWorld for World_46, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.33:593][338]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.33:779][338]LogUObjectHash: Compacting FUObjectHashTables data took   1.30ms
+[2025.01.13-11.25.36:318][567]LogWorld: UWorld::CleanupWorld for World_211, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.36:318][567]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.36:326][567]LogWorld: UWorld::CleanupWorld for World_210, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.36:326][567]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.36:382][567]LogUObjectHash: Compacting FUObjectHashTables data took   1.39ms
+[2025.01.13-11.25.36:955][626]LogWorld: UWorld::CleanupWorld for World_155, bSessionEnded=true, bCleanupResources=true
+[2025.01.13-11.25.36:955][626]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2025.01.13-11.25.37:026][626]LogUObjectHash: Compacting FUObjectHashTables data took   1.41ms
+[2025.01.13-11.25.45:244][494]LogEOSSDK: Warning: LogHttp: 00000410D6D26600: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.25.45:244][494]LogEOSSDK: Warning: LogHttp: 00000410D6D26600: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.25.45:244][494]LogEOSSDK: Warning: LogHttp: 00000410D6D26600: libcurl info message cache 0 (Hostname api.epicgames.dev was found in DNS cache)
+[2025.01.13-11.25.45:244][494]LogEOSSDK: Warning: LogHttp: 00000410D6D26600: libcurl info message cache 1 (  Trying 52.200.40.31:443...)
+[2025.01.13-11.25.45:244][494]LogEOSSDK: Warning: LogHttp: 00000410D6D26600: libcurl info message cache 2 (connect to 52.200.40.31 port 443 failed: Timed out)
+[2025.01.13-11.25.45:244][495]LogEOSSDK: Warning: LogHttp: 00000410D6D26600: libcurl info message cache 3 (  Trying 3.224.72.95:443...)
+[2025.01.13-11.25.45:244][495]LogEOSSDK: Warning: LogHttp: 00000410D6D26600: libcurl info message cache 4 (Closing connection)
+[2025.01.13-11.25.45:244][495]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.25.45:244][495]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
+[2025.01.13-11.25.45:252][495]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 2.313120 seconds
+[2025.01.13-11.25.47:562][731]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5063.789551
+[2025.01.13-11.25.53:905][340]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.25.53:905][340]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.25.53:905][341]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: libcurl info message cache 0 (Found bundle for host: 0x41060880ed0 [serially])
+[2025.01.13-11.25.53:905][341]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: libcurl info message cache 1 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.25.53:905][341]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: libcurl info message cache 2 (  Trying 52.200.40.31:443...)
+[2025.01.13-11.25.53:905][341]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: libcurl info message cache 3 (connect to 52.200.40.31 port 443 failed: Timed out)
+[2025.01.13-11.25.53:905][341]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: libcurl info message cache 4 (  Trying 3.229.92.102:443...)
+[2025.01.13-11.25.53:905][341]LogEOSSDK: Warning: LogHttp: 00000410D6D2BA00: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.25.53:905][341]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.25.54:223][377]LogHttp: Warning: 000004110E7FBD00: request failed, libcurl error: 28 (Timeout was reached)
+[2025.01.13-11.25.54:223][377]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 0 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.25.54:223][377]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 1 (  Trying 54.211.220.206:443...)
+[2025.01.13-11.25.54:223][377]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 2 (ipv4 connect timeout after 14995ms, move on!)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 3 (  Trying 3.93.103.235:443...)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 4 (ipv4 connect timeout after 7497ms, move on!)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 5 (  Trying 52.7.141.186:443...)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 6 (ipv4 connect timeout after 3748ms, move on!)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 7 (  Trying 52.23.191.183:443...)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 8 (ipv4 connect timeout after 1873ms, move on!)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 9 (  Trying 35.173.27.144:443...)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 10 (ipv4 connect timeout after 936ms, move on!)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 11 (  Trying 54.211.174.239:443...)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 12 (ipv4 connect timeout after 468ms, move on!)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 13 (  Trying 44.213.24.36:443...)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 14 (ipv4 connect timeout after 467ms, move on!)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 15 (Connection timeout after 30001 ms)
+[2025.01.13-11.25.54:223][378]LogHttp: Warning: 000004110E7FBD00: libcurl info message cache 16 (Closing connection)
+[2025.01.13-11.25.56:164][472]LogSlate: Window 'Pick Parent Class for New Widget Blueprint' being destroyed
+[2025.01.13-11.25.56:170][472]LogContentBrowser: Deferred new asset file creation: NewWidgetBlueprint
+[2025.01.13-11.25.56:176][472]LogContentBrowser: Creating deferred item: NewWidgetBlueprint
+[2025.01.13-11.25.56:187][473]LogContentBrowser: Renaming the item being created (Deferred Item: NewWidgetBlueprint).
+[2025.01.13-11.26.10:005][932]LogContentBrowser: Attempting asset rename: NewWidgetBlueprint -> WBC_Parameters
+[2025.01.13-11.26.10:013][932]LogContentBrowser: End creating deferred item NewWidgetBlueprint
+[2025.01.13-11.26.10:393][972]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.26.10:461][972]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Parameters] ([2] browsable assets)...
+[2025.01.13-11.26.10:462][972]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Parameters.WBC_Parameters]
+[2025.01.13-11.26.10:462][972]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Parameters]
+[2025.01.13-11.26.10:465][972]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Parameters
+[2025.01.13-11.26.10:465][972]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_ParametersE8DE8D93495731E34AAEF8868B28EADA.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Parameters.uasset'
+[2025.01.13-11.26.10:484][972]LogFileHelpers: InternalPromptForCheckoutAndSave took 91.423 ms (total: 34.3 sec)
+[2025.01.13-11.26.10:545][972]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.26.10:545][972]LogContentValidation: Enabled validators:
+[2025.01.13-11.26.10:545][972]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.26.10:545][972]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.26.10:545][972]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.26.10:545][972]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.26.10:545][972]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.26.10:545][972]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.26.10:545][972]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Parameters Validating asset
+[2025.01.13-11.26.15:759][532]LogContentBrowser: Deferred new asset folder creation: NewFolder
+[2025.01.13-11.26.15:765][532]LogContentBrowser: Creating deferred item: NewFolder
+[2025.01.13-11.26.15:776][533]LogContentBrowser: Renaming the item being created (Deferred Item: NewFolder).
+[2025.01.13-11.26.17:507][719]LogContentBrowser: Attempting asset rename: NewFolder -> NewFolder
+[2025.01.13-11.26.17:508][719]LogContentBrowser: End creating deferred item NewFolder
+[2025.01.13-11.26.17:585][725]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.26.17:585][725]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.26.17:585][725]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: libcurl info message cache 0 (Found bundle for host: 0x41060880ed0 [serially])
+[2025.01.13-11.26.17:585][725]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: libcurl info message cache 1 (Hostname api.epicgames.dev was found in DNS cache)
+[2025.01.13-11.26.17:585][725]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: libcurl info message cache 2 (  Trying 52.200.40.31:443...)
+[2025.01.13-11.26.17:585][725]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: libcurl info message cache 3 (connect to 52.200.40.31 port 443 failed: Timed out)
+[2025.01.13-11.26.17:585][725]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: libcurl info message cache 4 (  Trying 3.229.92.102:443...)
+[2025.01.13-11.26.17:585][726]LogEOSSDK: Warning: LogHttp: 00000410D6A56000: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.26.17:585][726]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.26.17:585][726]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
+[2025.01.13-11.26.17:594][726]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 4.039430 seconds
+[2025.01.13-11.26.19:834][961]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.26.19:922][961]LogUObjectHash: Compacting FUObjectHashTables data took   1.26ms
+[2025.01.13-11.26.19:939][961]LogSavePackage: Moving output files for package: /Game/SteeringLab/Maps/MAP_SteeringLab
+[2025.01.13-11.26.19:939][961]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/MAP_SteeringLab297341264DAD1A17B2310F95C2CA7A40.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Maps/MAP_SteeringLab.umap'
+[2025.01.13-11.26.19:948][961]LogFileHelpers: Saving map 'MAP_SteeringLab' took 0.071
+[2025.01.13-11.26.19:954][961]LogFileHelpers: InternalPromptForCheckoutAndSave took 121.082 ms (total: 34.4 sec)
+[2025.01.13-11.26.20:018][961]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.26.20:018][961]LogContentValidation: Enabled validators:
+[2025.01.13-11.26.20:018][961]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.26.20:018][961]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.26.20:018][961]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.26.20:018][961]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.26.20:018][961]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.26.20:018][961]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.26.20:018][961]AssetCheck: /Game/SteeringLab/Maps/MAP_SteeringLab Validating asset
+[2025.01.13-11.26.21:675][ 98]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5097.887207
+[2025.01.13-11.26.28:930][572]LogSlate: Window 'Pick Parent Class for New Widget Blueprint' being destroyed
+[2025.01.13-11.26.28:974][572]LogContentBrowser: Deferred new asset file creation: NewWidgetBlueprint
+[2025.01.13-11.26.28:979][572]LogContentBrowser: Creating deferred item: NewWidgetBlueprint
+[2025.01.13-11.26.28:990][573]LogContentBrowser: Renaming the item being created (Deferred Item: NewWidgetBlueprint).
+[2025.01.13-11.26.32:563][933]LogContentBrowser: Attempting asset rename: NewWidgetBlueprint -> WBC_Sliders
+[2025.01.13-11.26.32:571][933]LogContentBrowser: End creating deferred item NewWidgetBlueprint
+[2025.01.13-11.26.32:858][963]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.26.32:927][963]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Sliders] ([2] browsable assets)...
+[2025.01.13-11.26.32:928][963]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Sliders.WBC_Sliders]
+[2025.01.13-11.26.32:928][963]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Sliders]
+[2025.01.13-11.26.32:931][963]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Sliders
+[2025.01.13-11.26.32:931][963]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_Sliders873FC5AB4FC4EC3B6844528A05245F25.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Sliders.uasset'
+[2025.01.13-11.26.32:940][963]LogFileHelpers: InternalPromptForCheckoutAndSave took 83.118 ms (total: 34.5 sec)
+[2025.01.13-11.26.32:994][963]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.26.32:994][963]LogContentValidation: Enabled validators:
+[2025.01.13-11.26.32:994][963]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.26.32:994][963]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.26.32:994][963]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.26.32:994][963]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.26.32:994][963]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.26.32:994][963]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.26.32:994][963]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Sliders Validating asset
+[2025.01.13-11.26.34:010][ 64]LogAssetEditorSubsystem: Opening Asset editor for WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Parameters.WBC_Parameters
+[2025.01.13-11.26.34:011][ 64]LogChaosDD: Creating Chaos Debug Draw Scene for world World_220
+[2025.01.13-11.26.34:020][ 64]LogChaosDD: Creating Chaos Debug Draw Scene for world World_221
+[2025.01.13-11.26.36:389][231]LogSlate: Window 'WBC_Parameters' being destroyed
+[2025.01.13-11.26.43:347][ 26]LogAssetEditorSubsystem: Opening Asset editor for WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Chooser.WBC_Chooser
+[2025.01.13-11.26.43:347][ 26]LogChaosDD: Creating Chaos Debug Draw Scene for world World_222
+[2025.01.13-11.26.43:354][ 26]LogChaosDD: Creating Chaos Debug Draw Scene for world World_223
+[2025.01.13-11.26.51:692][874]LogEOSSDK: Warning: LogHttp: 00000410CD059000: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.26.51:692][874]LogEOSSDK: Warning: LogHttp: 00000410CD059000: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.26.51:692][875]LogEOSSDK: Warning: LogHttp: 00000410CD059000: libcurl info message cache 0 (Hostname api.epicgames.dev was found in DNS cache)
+[2025.01.13-11.26.51:692][875]LogEOSSDK: Warning: LogHttp: 00000410CD059000: libcurl info message cache 1 (  Trying 52.200.40.31:443...)
+[2025.01.13-11.26.51:692][875]LogEOSSDK: Warning: LogHttp: 00000410CD059000: libcurl info message cache 2 (connect to 52.200.40.31 port 443 failed: Timed out)
+[2025.01.13-11.26.51:692][875]LogEOSSDK: Warning: LogHttp: 00000410CD059000: libcurl info message cache 3 (  Trying 3.229.92.102:443...)
+[2025.01.13-11.26.51:692][875]LogEOSSDK: Warning: LogHttp: 00000410CD059000: libcurl info message cache 4 (Closing connection)
+[2025.01.13-11.26.51:692][875]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.26.51:692][875]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
+[2025.01.13-11.26.51:701][875]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 14.154973 seconds
+[2025.01.13-11.26.51:718][877]LogEOSSDK: Warning: LogEOSAnalytics: Unable to get the client auth token. Last result: EOS_NoConnection.
+[2025.01.13-11.26.53:756][103]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.26.53:756][103]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.26.53:756][103]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: libcurl info message cache 0 (Found bundle for host: 0x41060880000 [serially])
+[2025.01.13-11.26.53:756][104]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: libcurl info message cache 1 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.26.53:756][104]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: libcurl info message cache 2 (  Trying 3.224.72.95:443...)
+[2025.01.13-11.26.53:756][104]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: libcurl info message cache 3 (connect to 3.224.72.95 port 443 failed: Timed out)
+[2025.01.13-11.26.53:756][104]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: libcurl info message cache 4 (  Trying 44.197.67.248:443...)
+[2025.01.13-11.26.53:756][104]LogEOSSDK: Warning: LogHttp: 0000041048CF6000: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.26.53:765][104]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.26.54:189][152]LogHttp: Warning: 00000410AE3A4D00: request failed, libcurl error: 28 (Timeout was reached)
+[2025.01.13-11.26.54:189][152]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 0 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.26.54:189][152]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 1 (  Trying 52.23.191.183:443...)
+[2025.01.13-11.26.54:189][152]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 2 (ipv4 connect timeout after 14994ms, move on!)
+[2025.01.13-11.26.54:189][152]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 3 (  Trying 44.210.213.190:443...)
+[2025.01.13-11.26.54:189][152]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 4 (ipv4 connect timeout after 7497ms, move on!)
+[2025.01.13-11.26.54:189][152]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 5 (  Trying 54.160.28.106:443...)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 6 (ipv4 connect timeout after 3747ms, move on!)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 7 (  Trying 52.7.141.186:443...)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 8 (ipv4 connect timeout after 1873ms, move on!)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 9 (  Trying 54.211.220.206:443...)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 10 (ipv4 connect timeout after 936ms, move on!)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 11 (  Trying 3.93.103.235:443...)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 12 (ipv4 connect timeout after 468ms, move on!)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 13 (  Trying 54.82.208.120:443...)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 14 (ipv4 connect timeout after 468ms, move on!)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 15 (Connection timeout after 30000 ms)
+[2025.01.13-11.26.54:189][153]LogHttp: Warning: 00000410AE3A4D00: libcurl info message cache 16 (Closing connection)
+[2025.01.13-11.26.56:230][375]LogUObjectHash: Compacting FUObjectHashTables data took   1.43ms
+[2025.01.13-11.26.56:379][375]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.26.56:428][375]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Parameters] ([2] browsable assets)...
+[2025.01.13-11.26.56:430][375]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Parameters.WBC_Parameters]
+[2025.01.13-11.26.56:430][375]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Parameters]
+[2025.01.13-11.26.56:433][375]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Parameters
+[2025.01.13-11.26.56:434][375]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_Parameters40B4E0F14CE4AE3ED8639E83920A4395.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Parameters.uasset'
+[2025.01.13-11.26.56:440][375]LogFileHelpers: InternalPromptForCheckoutAndSave took 60.815 ms (total: 34.5 sec)
+[2025.01.13-11.26.56:511][375]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.26.56:511][375]LogContentValidation: Enabled validators:
+[2025.01.13-11.26.56:511][375]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.26.56:511][375]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.26.56:511][375]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.26.56:511][375]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.26.56:511][375]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.26.56:511][375]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.26.56:511][375]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Parameters Validating asset
+[2025.01.13-11.27.05:853][413]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5142.051270
+[2025.01.13-11.27.07:393][582]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.27.07:444][582]OBJ SavePackage: Generating thumbnails for [1] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Parameters] ([2] browsable assets)...
+[2025.01.13-11.27.07:445][582]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Parameters]
+[2025.01.13-11.27.07:447][582]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Parameters
+[2025.01.13-11.27.07:448][582]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_ParametersFCA1BDED4B1410C09FD5CC9026E2F9EA.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Parameters.uasset'
+[2025.01.13-11.27.07:454][582]LogFileHelpers: InternalPromptForCheckoutAndSave took 61.254 ms (total: 34.6 sec)
+[2025.01.13-11.27.07:511][582]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.27.07:511][582]LogContentValidation: Enabled validators:
+[2025.01.13-11.27.07:511][582]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.27.07:511][582]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.27.07:511][582]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.27.07:511][582]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.27.07:511][582]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.27.07:511][582]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.27.07:511][582]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Parameters Validating asset
+[2025.01.13-11.27.09:937][858]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.27.09:999][858]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Parameters] ([2] browsable assets)...
+[2025.01.13-11.27.10:002][858]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Parameters.WBC_Parameters]
+[2025.01.13-11.27.10:002][858]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Parameters]
+[2025.01.13-11.27.10:005][858]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Parameters
+[2025.01.13-11.27.10:006][858]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_Parameters84DBF2B3495F9CC8C76DA1BDA1D00C9C.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Parameters.uasset'
+[2025.01.13-11.27.10:012][858]LogFileHelpers: InternalPromptForCheckoutAndSave took 74.679 ms (total: 34.7 sec)
+[2025.01.13-11.27.10:081][858]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.27.10:081][858]LogContentValidation: Enabled validators:
+[2025.01.13-11.27.10:081][858]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.27.10:081][858]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.27.10:081][858]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.27.10:081][858]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.27.10:081][858]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.27.10:081][858]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.27.10:081][858]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Parameters Validating asset
+[2025.01.13-11.27.30:490][225]LogUObjectHash: Compacting FUObjectHashTables data took   1.36ms
+[2025.01.13-11.27.31:169][279]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.27.31:227][279]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Parameters] ([2] browsable assets)...
+[2025.01.13-11.27.31:229][279]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Parameters.WBC_Parameters]
+[2025.01.13-11.27.31:229][279]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Parameters]
+[2025.01.13-11.27.31:232][279]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Parameters
+[2025.01.13-11.27.31:232][279]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_Parameters13588E6445088A4EFA9D17B2715F2C9F.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Parameters.uasset'
+[2025.01.13-11.27.31:239][279]LogFileHelpers: InternalPromptForCheckoutAndSave took 70.332 ms (total: 34.8 sec)
+[2025.01.13-11.27.31:293][279]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.27.31:293][279]LogContentValidation: Enabled validators:
+[2025.01.13-11.27.31:294][279]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.27.31:294][279]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.27.31:294][279]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.27.31:294][279]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.27.31:294][279]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.27.31:294][279]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.27.31:294][279]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Parameters Validating asset
+[2025.01.13-11.27.35:870][819]LogEOSSDK: Warning: LogHttp: 000004108EF25A00: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.27.35:870][819]LogEOSSDK: Warning: LogHttp: 000004108EF25A00: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.27.35:870][819]LogEOSSDK: Warning: LogHttp: 000004108EF25A00: libcurl info message cache 0 (Hostname api.epicgames.dev was found in DNS cache)
+[2025.01.13-11.27.35:870][819]LogEOSSDK: Warning: LogHttp: 000004108EF25A00: libcurl info message cache 1 (  Trying 3.224.72.95:443...)
+[2025.01.13-11.27.35:870][819]LogEOSSDK: Warning: LogHttp: 000004108EF25A00: libcurl info message cache 2 (connect to 3.224.72.95 port 443 failed: Timed out)
+[2025.01.13-11.27.35:870][820]LogEOSSDK: Warning: LogHttp: 000004108EF25A00: libcurl info message cache 3 (  Trying 44.197.67.248:443...)
+[2025.01.13-11.27.35:870][820]LogEOSSDK: Warning: LogHttp: 000004108EF25A00: libcurl info message cache 4 (Closing connection)
+[2025.01.13-11.27.35:870][820]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.27.35:870][820]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
+[2025.01.13-11.27.35:878][820]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 2.788781 seconds
+[2025.01.13-11.27.38:664][154]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5174.872559
+[2025.01.13-11.27.41:558][467]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.27.41:616][467]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Parameters] ([2] browsable assets)...
+[2025.01.13-11.27.41:619][467]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Parameters.WBC_Parameters]
+[2025.01.13-11.27.41:619][467]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Parameters]
+[2025.01.13-11.27.41:622][467]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Parameters
+[2025.01.13-11.27.41:622][467]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_Parameters1DCDF8514417D8C642BBC9971F6A3DA0.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Parameters.uasset'
+[2025.01.13-11.27.41:628][467]LogFileHelpers: InternalPromptForCheckoutAndSave took 70.192 ms (total: 34.8 sec)
+[2025.01.13-11.27.41:693][467]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.27.41:694][467]LogContentValidation: Enabled validators:
+[2025.01.13-11.27.41:694][467]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.27.41:694][467]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.27.41:694][467]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.27.41:694][467]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.27.41:694][467]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.27.41:694][467]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.27.41:694][467]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Parameters Validating asset
+[2025.01.13-11.27.42:314][533]LogUObjectHash: Compacting FUObjectHashTables data took   1.45ms
+[2025.01.13-11.27.53:751][734]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.27.53:751][734]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.27.53:751][734]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: libcurl info message cache 0 (Found bundle for host: 0x41060880a80 [serially])
+[2025.01.13-11.27.53:751][734]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: libcurl info message cache 1 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.27.53:751][735]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: libcurl info message cache 2 (  Trying 44.214.36.159:443...)
+[2025.01.13-11.27.53:751][735]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: libcurl info message cache 3 (connect to 44.214.36.159 port 443 failed: Timed out)
+[2025.01.13-11.27.53:751][735]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: libcurl info message cache 4 (  Trying 44.197.67.248:443...)
+[2025.01.13-11.27.53:751][735]LogEOSSDK: Warning: LogHttp: 00000410AC067E00: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.27.53:751][735]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: request failed, libcurl error: 28 (Timeout was reached)
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: libcurl info message cache 0 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: libcurl info message cache 1 (  Trying 54.236.124.219:443...)
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: libcurl info message cache 2 (ipv4 connect timeout after 14995ms, move on!)
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: libcurl info message cache 3 (  Trying 54.82.200.174:443...)
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: libcurl info message cache 4 (ipv4 connect timeout after 7498ms, move on!)
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: libcurl info message cache 5 (  Trying 34.204.248.123:443...)
+[2025.01.13-11.27.54:191][781]LogHttp: Warning: 00000410B872D900: libcurl info message cache 6 (ipv4 connect timeout after 3748ms, move on!)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 7 (  Trying 54.145.145.163:443...)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 8 (ipv4 connect timeout after 1873ms, move on!)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 9 (  Trying 3.216.231.152:443...)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 10 (ipv4 connect timeout after 936ms, move on!)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 11 (  Trying 34.231.97.67:443...)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 12 (ipv4 connect timeout after 467ms, move on!)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 13 (  Trying 52.55.53.51:443...)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 14 (ipv4 connect timeout after 468ms, move on!)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 15 (Connection timeout after 30000 ms)
+[2025.01.13-11.27.54:191][782]LogHttp: Warning: 00000410B872D900: libcurl info message cache 16 (Closing connection)
+[2025.01.13-11.28.04:611][868]LogAssetEditorSubsystem: Opening Asset editor for WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Sliders.WBC_Sliders
+[2025.01.13-11.28.04:611][868]LogChaosDD: Creating Chaos Debug Draw Scene for world World_229
+[2025.01.13-11.28.04:619][868]LogChaosDD: Creating Chaos Debug Draw Scene for world World_230
+[2025.01.13-11.28.08:685][310]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.28.08:685][310]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.28.08:685][310]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: libcurl info message cache 0 (Found bundle for host: 0x41060880a80 [serially])
+[2025.01.13-11.28.08:685][310]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: libcurl info message cache 1 (Hostname api.epicgames.dev was found in DNS cache)
+[2025.01.13-11.28.08:685][311]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: libcurl info message cache 2 (  Trying 44.214.36.159:443...)
+[2025.01.13-11.28.08:685][311]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: libcurl info message cache 3 (connect to 44.214.36.159 port 443 failed: Timed out)
+[2025.01.13-11.28.08:685][311]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: libcurl info message cache 4 (  Trying 44.197.67.248:443...)
+[2025.01.13-11.28.08:685][311]LogEOSSDK: Warning: LogHttp: 00000410D9DBE400: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.28.08:685][311]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.28.08:685][311]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
+[2025.01.13-11.28.08:694][311]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 7.929319 seconds
+[2025.01.13-11.28.16:552][239]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.28.16:594][239]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Sliders] ([2] browsable assets)...
+[2025.01.13-11.28.16:596][239]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Sliders.WBC_Sliders]
+[2025.01.13-11.28.16:596][239]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Sliders]
+[2025.01.13-11.28.16:600][239]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Sliders
+[2025.01.13-11.28.16:600][239]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_Sliders007B77D04DA1644C3CD9FA878839AB8C.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Sliders.uasset'
+[2025.01.13-11.28.16:607][239]LogFileHelpers: InternalPromptForCheckoutAndSave took 54.991 ms (total: 34.9 sec)
+[2025.01.13-11.28.16:660][239]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.28.16:660][239]LogContentValidation: Enabled validators:
+[2025.01.13-11.28.16:660][239]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.28.16:660][239]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.28.16:660][239]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.28.16:660][239]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.28.16:660][239]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.28.16:660][239]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.28.16:661][239]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Sliders Validating asset
+[2025.01.13-11.28.16:671][239]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5212.878418
+[2025.01.13-11.28.17:821][366]LogUObjectHash: Compacting FUObjectHashTables data took   1.29ms
+[2025.01.13-11.28.25:833][248]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.28.25:893][248]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Sliders] ([2] browsable assets)...
+[2025.01.13-11.28.25:895][248]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Sliders.WBC_Sliders]
+[2025.01.13-11.28.25:895][248]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Sliders]
+[2025.01.13-11.28.25:897][248]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Sliders
+[2025.01.13-11.28.25:898][248]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_SlidersDD28FDAB477EE54D972202BCA57D6CF2.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Sliders.uasset'
+[2025.01.13-11.28.25:905][248]LogFileHelpers: InternalPromptForCheckoutAndSave took 72.783 ms (total: 35.0 sec)
+[2025.01.13-11.28.25:942][248]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.28.25:943][248]LogContentValidation: Enabled validators:
+[2025.01.13-11.28.25:943][248]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.28.25:943][248]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.28.25:943][248]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.28.25:943][248]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.28.25:943][248]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.28.25:943][248]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.28.25:943][248]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Sliders Validating asset
+[2025.01.13-11.28.28:740][568]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.28.28:794][568]OBJ SavePackage: Generating thumbnails for [2] asset(s) in package [/Game/SteeringLab/Widgets/Components/WBC_Sliders] ([2] browsable assets)...
+[2025.01.13-11.28.28:796][568]OBJ SavePackage:     Rendered thumbnail for [WidgetBlueprint /Game/SteeringLab/Widgets/Components/WBC_Sliders.WBC_Sliders]
+[2025.01.13-11.28.28:796][568]OBJ SavePackage: Finished generating thumbnails for package [/Game/SteeringLab/Widgets/Components/WBC_Sliders]
+[2025.01.13-11.28.28:799][568]LogSavePackage: Moving output files for package: /Game/SteeringLab/Widgets/Components/WBC_Sliders
+[2025.01.13-11.28.28:799][568]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/WBC_SlidersA9DD1A1741B4E2379F4183B118526438.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Widgets/Components/WBC_Sliders.uasset'
+[2025.01.13-11.28.28:805][568]LogFileHelpers: InternalPromptForCheckoutAndSave took 64.944 ms (total: 35.0 sec)
+[2025.01.13-11.28.28:843][568]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.28.28:843][568]LogContentValidation: Enabled validators:
+[2025.01.13-11.28.28:843][568]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.28.28:843][568]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.28.28:843][568]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.28.28:843][568]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.28.28:843][568]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.28.28:843][568]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.28.28:844][568]AssetCheck: /Game/SteeringLab/Widgets/Components/WBC_Sliders Validating asset
+[2025.01.13-11.28.31:518][864]LogUObjectHash: Compacting FUObjectHashTables data took   1.32ms
+[2025.01.13-11.28.46:748][563]LogEOSSDK: Warning: LogHttp: 00000410CB0F1200: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.28.46:748][563]LogEOSSDK: Warning: LogHttp: 00000410CB0F1200: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.28.46:748][563]LogEOSSDK: Warning: LogHttp: 00000410CB0F1200: libcurl info message cache 0 (Hostname api.epicgames.dev was found in DNS cache)
+[2025.01.13-11.28.46:748][564]LogEOSSDK: Warning: LogHttp: 00000410CB0F1200: libcurl info message cache 1 (  Trying 44.214.36.159:443...)
+[2025.01.13-11.28.46:748][564]LogEOSSDK: Warning: LogHttp: 00000410CB0F1200: libcurl info message cache 2 (connect to 44.214.36.159 port 443 failed: Timed out)
+[2025.01.13-11.28.46:748][564]LogEOSSDK: Warning: LogHttp: 00000410CB0F1200: libcurl info message cache 3 (  Trying 44.197.67.248:443...)
+[2025.01.13-11.28.46:748][564]LogEOSSDK: Warning: LogHttp: 00000410CB0F1200: libcurl info message cache 4 (Closing connection)
+[2025.01.13-11.28.46:748][564]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.28.46:748][564]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
+[2025.01.13-11.28.47:085][564]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 12.982330 seconds
+[2025.01.13-11.28.47:748][566]LogEOSSDK: Warning: LogEOSAnalytics: Unable to get the client auth token. Last result: EOS_NoConnection.
+[2025.01.13-11.28.53:754][584]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.28.53:754][584]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.28.53:754][584]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: libcurl info message cache 0 (Found bundle for host: 0x410608803f0 [serially])
+[2025.01.13-11.28.53:754][584]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: libcurl info message cache 1 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.28.53:754][584]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: libcurl info message cache 2 (  Trying 3.224.72.95:443...)
+[2025.01.13-11.28.53:754][585]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: libcurl info message cache 3 (connect to 3.224.72.95 port 443 failed: Timed out)
+[2025.01.13-11.28.53:754][585]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: libcurl info message cache 4 (  Trying 98.85.51.174:443...)
+[2025.01.13-11.28.53:754][585]LogEOSSDK: Warning: LogHttp: 000004104C70CC00: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.28.53:754][585]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: request failed, libcurl error: 28 (Timeout was reached)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 0 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 1 (  Trying 52.86.60.145:443...)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 2 (ipv4 connect timeout after 14996ms, move on!)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 3 (  Trying 34.236.2.141:443...)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 4 (ipv4 connect timeout after 7497ms, move on!)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 5 (  Trying 34.204.248.123:443...)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 6 (ipv4 connect timeout after 3747ms, move on!)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 7 (  Trying 44.205.56.12:443...)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 8 (ipv4 connect timeout after 1873ms, move on!)
+[2025.01.13-11.28.54:416][586]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 9 (  Trying 3.217.1.29:443...)
+[2025.01.13-11.28.54:416][587]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 10 (ipv4 connect timeout after 936ms, move on!)
+[2025.01.13-11.28.54:416][587]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 11 (  Trying 34.231.97.67:443...)
+[2025.01.13-11.28.54:416][587]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 12 (ipv4 connect timeout after 467ms, move on!)
+[2025.01.13-11.28.54:416][587]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 13 (  Trying 3.233.142.34:443...)
+[2025.01.13-11.28.54:416][587]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 14 (ipv4 connect timeout after 466ms, move on!)
+[2025.01.13-11.28.54:416][587]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 15 (Connection timeout after 30001 ms)
+[2025.01.13-11.28.54:416][587]LogHttp: Warning: 0000040FEDBE0E00: libcurl info message cache 16 (Closing connection)
+[2025.01.13-11.28.59:749][602]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5255.951172
