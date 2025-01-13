@@ -13756,3 +13756,60 @@ Sampler Limit: 32
 [2025.01.13-11.24.24:263][ 48]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
 [2025.01.13-11.24.24:596][ 49]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 7.316263 seconds
 [2025.01.13-11.24.31:602][ 70]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 4987.829590
+[2025.01.13-11.24.53:948][506]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: HTTP request timed out after 30.00 seconds URL=https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.24.53:948][506]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.24.53:948][506]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: libcurl info message cache 0 (Found bundle for host: 0x41060880a20 [serially])
+[2025.01.13-11.24.53:948][507]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: libcurl info message cache 1 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.24.53:948][507]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: libcurl info message cache 2 (  Trying 52.200.40.31:443...)
+[2025.01.13-11.24.53:948][507]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: libcurl info message cache 3 (connect to 52.200.40.31 port 443 failed: Timed out)
+[2025.01.13-11.24.53:948][507]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: libcurl info message cache 4 (  Trying 3.224.72.95:443...)
+[2025.01.13-11.24.53:948][507]LogEOSSDK: Warning: LogHttp: 00000410D6D23000: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.24.53:948][507]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/telemetry/data/datarouter/api/v1/public/data?SessionID=%7B4A2ACAB4-4413-0E1E-6C96-558FF593A951%7D&AppID=EOSSDK.PhaseRelease.ReleaseBuild&AppVersion=1.16.4-36651368%20-%20%2B%2BEOSSDK%2BRelease-1.16.4-CL-36651368&UserID=&AppEnvironment=Production&UploadType=sdkevents
+[2025.01.13-11.24.54:806][514]LogSlate: External Image Picker: DecompressImage failed
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: request failed, libcurl error: 28 (Timeout was reached)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 0 (Hostname in DNS cache was stale, zapped)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 1 (  Trying 44.205.56.12:443...)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 2 (ipv4 connect timeout after 14995ms, move on!)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 3 (  Trying 54.236.124.219:443...)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 4 (ipv4 connect timeout after 7496ms, move on!)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 5 (  Trying 34.231.97.67:443...)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 6 (ipv4 connect timeout after 3748ms, move on!)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 7 (  Trying 54.145.145.163:443...)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 8 (ipv4 connect timeout after 1874ms, move on!)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 9 (  Trying 3.217.1.29:443...)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 10 (ipv4 connect timeout after 936ms, move on!)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 11 (  Trying 52.206.29.63:443...)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 12 (ipv4 connect timeout after 468ms, move on!)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 13 (  Trying 34.236.2.141:443...)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 14 (ipv4 connect timeout after 467ms, move on!)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 15 (Connection timeout after 30001 ms)
+[2025.01.13-11.24.55:050][514]LogHttp: Warning: 000004105C52C400: libcurl info message cache 16 (Closing connection)
+[2025.01.13-11.25.01:947][985]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: HTTP request timed out after 30.01 seconds URL=https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.25.01:947][985]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: request failed, libcurl error: 0 (No error)
+[2025.01.13-11.25.01:947][985]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: libcurl info message cache 0 (Found bundle for host: 0x41060880a20 [serially])
+[2025.01.13-11.25.01:948][986]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: libcurl info message cache 1 (Hostname api.epicgames.dev was found in DNS cache)
+[2025.01.13-11.25.01:948][986]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: libcurl info message cache 2 (  Trying 52.200.40.31:443...)
+[2025.01.13-11.25.01:948][986]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: libcurl info message cache 3 (connect to 52.200.40.31 port 443 failed: Timed out)
+[2025.01.13-11.25.01:948][986]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: libcurl info message cache 4 (  Trying 3.224.72.95:443...)
+[2025.01.13-11.25.01:948][986]LogEOSSDK: Warning: LogHttp: 00000410D6D21E00: libcurl info message cache 5 (Closing connection)
+[2025.01.13-11.25.01:948][986]LogEOSSDK: Warning: LogHttp: Retry exhausted on https://api.epicgames.dev/sdk/v1/default?platformId=WIN
+[2025.01.13-11.25.01:948][986]LogEOSSDK: Warning: LogEOS: Failed to connect to the backend. ServiceName=[SDKConfig], OperationName=[GetPlatformConfigRoute], Url=[<Redacted>]
+[2025.01.13-11.25.01:963][986]LogEOSSDK: Warning: LogEOS: SDK Config Platform Update Request Failed, Result Code: EOS_NoConnection, Retrying after 12.688864 seconds
+[2025.01.13-11.25.02:007][988]LogEOSSDK: Warning: LogEOSAnalytics: Unable to get the client auth token. Last result: EOS_NoConnection.
+[2025.01.13-11.25.06:814][304]LogSlate: Window 'Project Settings' being destroyed
+[2025.01.13-11.25.07:516][351]LogFileHelpers: InternalPromptForCheckoutAndSave started...
+[2025.01.13-11.25.07:604][351]LogUObjectHash: Compacting FUObjectHashTables data took   0.60ms
+[2025.01.13-11.25.07:619][351]LogSavePackage: Moving output files for package: /Game/SteeringLab/Maps/MAP_SteeringLab
+[2025.01.13-11.25.07:619][351]LogSavePackage: Moving '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Saved/MAP_SteeringLab7A5880DA41A85AC15DF5AB909EA6B716.tmp' to '../../../../../../Users/UTILISATEUR-14/Documents/GitHub/Steering_Lab/SteeringProject/Content/SteeringLab/Maps/MAP_SteeringLab.umap'
+[2025.01.13-11.25.07:628][351]LogFileHelpers: Saving map 'MAP_SteeringLab' took 0.067
+[2025.01.13-11.25.07:633][351]LogFileHelpers: InternalPromptForCheckoutAndSave took 118.184 ms (total: 34.2 sec)
+[2025.01.13-11.25.07:695][351]LogContentValidation: Display: Starting to validate 1 assets
+[2025.01.13-11.25.07:695][351]LogContentValidation: Enabled validators:
+[2025.01.13-11.25.07:695][351]LogContentValidation: 	/Script/DataValidation.EditorValidator_Material
+[2025.01.13-11.25.07:695][351]LogContentValidation: 	/Script/DataValidation.DirtyFilesChangelistValidator
+[2025.01.13-11.25.07:695][351]LogContentValidation: 	/Script/DataValidation.EditorValidator_Localization
+[2025.01.13-11.25.07:695][351]LogContentValidation: 	/Script/DataValidation.PackageFileValidator
+[2025.01.13-11.25.07:695][351]LogContentValidation: 	/Script/DataValidation.WorldPartitionChangelistValidator
+[2025.01.13-11.25.07:695][351]LogContentValidation: 	/Script/InputBlueprintNodes.EnhancedInputUserWidgetValidator
+[2025.01.13-11.25.07:695][351]AssetCheck: /Game/SteeringLab/Maps/MAP_SteeringLab Validating asset
+[2025.01.13-11.25.14:880][702]LogEOSSDK: LogEOS: Updating Platform SDK Config, Time: 5031.109863
