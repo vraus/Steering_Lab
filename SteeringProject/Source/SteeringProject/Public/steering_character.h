@@ -2,6 +2,10 @@
 
 #pragma once
 
+// Project
+#include "GlobalVars.h"
+
+// Core
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "steering_character.generated.h"

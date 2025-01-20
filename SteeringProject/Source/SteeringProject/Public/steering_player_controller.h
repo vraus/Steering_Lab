@@ -2,6 +2,11 @@
 
 #pragma once
 
+// Project
+#include "GlobalVars.h"
+#include "steering_character.h"
+
+// Core
 #include "CoreMinimal.h"
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
@@ -10,8 +15,6 @@
 class UInputMappingContext;
 class UInputAction;
 
-DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
-
 UCLASS()
 class STEERINGPROJECT_API Asteering_player_controller : public APlayerController
 {
@@ -19,6 +22,12 @@ class STEERINGPROJECT_API Asteering_player_controller : public APlayerController
 
 public:
 	Asteering_player_controller();
+
+	UFUNCTION(BlueprintCallable, Category = "Steering")
+	void SetMovementBehaviour(EBehaviours new_behaviour);
+
+	UFUNCTION(BlueprintCallable, Category = "Steering")
+	void SetCharacter(Asteering_character* player_pawn);
 
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
@@ -38,6 +47,8 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay() override;
 
+	virtual void Tick() override;
+
 	/** Input handlers for SetDestination action. */
 	void OnInputStarted();
 
@@ -45,8 +56,16 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Steering")
 	void MoveTo(FVector Location);
 
-private:
-	FVector CachedDestination;
+	EBehaviours behaviour;
 
-	float FollowTime; // For how long it has been pressed
+private:
+	void MoveSeek(FVector Location);
+	void MoveFlee(FVector Location);
+	void MovePursuit(FVector Location);
+	void MoveEvade(FVector Location);
+	void MoveArrival(FVector Location);
+
+	Asteering_character *character_;
+	FVector CachedDestination;
+	float FollowTime;
 };
