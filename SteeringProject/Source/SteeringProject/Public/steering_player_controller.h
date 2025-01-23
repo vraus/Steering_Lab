@@ -47,8 +47,6 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay() override;
 
-	virtual void Tick() override;
-
 	/** Input handlers for SetDestination action. */
 	void OnInputStarted();
 
@@ -66,6 +64,9 @@ private:
 	void MoveArrival(FVector Location);
 
 	Asteering_character *character_;
+	FMovableActorInfos player_stats_;
+
 	FVector CachedDestination;
 	float FollowTime;
+
 };

@@ -19,3 +19,33 @@ enum class EBehaviours : uint8
 	Evade UMETA(DisplayName = "Evade"),
 	Arrival UMETA(DisplayName = "Arrival"),
 };
+
+/**
+* Struct containing all the infos relative to the movement speed and direction of the actor
+*/
+USTRUCT(BlueprintType)
+struct FMovableActorInfos
+{
+	GENERATED_USTRUCT_BODY()
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Mass;
+
+	/** For now I don't need this...
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector Position;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector Velocity;
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FRotator Orientation;
+	*/
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MaxForce;
+};
