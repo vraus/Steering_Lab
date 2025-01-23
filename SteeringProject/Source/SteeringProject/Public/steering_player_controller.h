@@ -5,6 +5,7 @@
 // Project
 #include "GlobalVars.h"
 #include "steering_character.h"
+#include "TargetActor.h"
 
 // Core
 #include "CoreMinimal.h"
@@ -24,14 +25,17 @@ public:
 	Asteering_player_controller();
 
 	UFUNCTION(BlueprintCallable, Category = "Steering")
-	void SetMovementBehaviour(EBehaviours new_behaviour);
+	void SetMovementBehaviour(EBehaviours New_Behaviour);
 
 	UFUNCTION(BlueprintCallable, Category = "Steering")
-	void SetCharacter(Asteering_character* player_pawn);
+	void SetCharacter(Asteering_character* Player_Pawn);
 
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	float ShortPressThreshold;
+
+	UFUNCTION(BlueprintCallable, Category = "Steering")
+	void OnInputStarted();
 
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
@@ -47,26 +51,30 @@ protected:
 	// To add mapping context
 	virtual void BeginPlay() override;
 
-	/** Input handlers for SetDestination action. */
-	void OnInputStarted();
+	virtual void Tick(float DeltaSeconds) override;
 
 	/** Movement functions */
 	UFUNCTION(BlueprintCallable, Category = "Steering")
-	void MoveTo(FVector Location);
+	void MoveTo(const FVector Target_Location, float DeltaSeconds);
 
-	EBehaviours behaviour;
+	EBehaviours Behaviour;
+
+	UFUNCTION(BlueprintCallable, Category = "Steering")
+	void SetCachedLocation(const FVector& NewLocation) { CachedDestination = NewLocation; }
 
 private:
-	void MoveSeek(FVector Location);
-	void MoveFlee(FVector Location);
-	void MovePursuit(FVector Location);
-	void MoveEvade(FVector Location);
-	void MoveArrival(FVector Location);
+	void MoveSeek(const FVector& Target_Location, float DeltaSeconds);
+	void MoveFlee(const FVector& Target_Location, float DeltaSeconds);
+	void MovePursuit(const FVector& Target_Location, float DeltaSeconds);
+	void MoveEvade(const FVector& Target_Location, float DeltaSeconds);
+	void MoveArrival(const FVector& Target_Location, float DeltaSeconds);
 
+	
 	Asteering_character *character_;
-	FMovableActorInfos player_stats_;
+	bool bShouldMove;
+	FVector Velocity;
+	FMovableActorInfos Player_Stats;
 
 	FVector CachedDestination;
 	float FollowTime;
-
 };

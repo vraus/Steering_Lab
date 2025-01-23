@@ -8,6 +8,12 @@ Asteering_character::Asteering_character()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	ActorInfos.Mass = 1.f;
+	ActorInfos.MaxSpeed = 600.f;
+	ActorInfos.MaxForce = 600.f;
+	ActorInfos.RotationSpeed = 600.f;
+
+	bUseControllerRotationYaw = false;
 }
 
 // Called when the game starts or when spawned

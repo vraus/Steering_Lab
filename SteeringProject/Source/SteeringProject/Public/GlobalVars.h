@@ -48,4 +48,7 @@ struct FMovableActorInfos
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxForce;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float RotationSpeed;
 };

@@ -18,20 +18,23 @@ Asteering_player_controller::Asteering_player_controller(): ShortPressThreshold(
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
 	FollowTime = 0.f;
-	behaviour = EBehaviours::Undefined;
+	Behaviour = EBehaviours::Undefined;
+
+	bShouldMove = false;
+	Velocity = FVector::ZeroVector;
 }
 
-void Asteering_player_controller::SetMovementBehaviour(EBehaviours new_behaviour)
+void Asteering_player_controller::SetMovementBehaviour(EBehaviours New_Behaviour)
 {
-	behaviour = new_behaviour;
+	Behaviour = New_Behaviour;
 	UE_LOG(LogTemp, Display, TEXT("New Behaviour received"));
 }
 
-void Asteering_player_controller::SetCharacter(Asteering_character* player_pawn)
+void Asteering_player_controller::SetCharacter(Asteering_character* Player_Pawn)
 {
-	if (player_pawn) {
-		character_ = player_pawn;
-		player_stats_ = character_->GetActorInfos();
+	if (Player_Pawn) {
+		character_ = Player_Pawn;
+		Player_Stats = character_->GetActorInfos();
 	}
 	else {
 		UE_LOG(LogTemp, Error, TEXT("Error: invalid player_pawn."));
@@ -43,32 +46,44 @@ void Asteering_player_controller::BeginPlay()
 	Super::BeginPlay();
 }
 
+void Asteering_player_controller::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (!bShouldMove) return;
+
+	MoveTo(CachedDestination, DeltaSeconds);
+}
+
 void Asteering_player_controller::OnInputStarted()
 {
 	StopMovement();
+	bShouldMove = true;
+
+	UE_LOG(LogTemp, Log, TEXT("Input Started"));
 }
 
-void Asteering_player_controller::MoveTo(FVector Location)
+void Asteering_player_controller::MoveTo(const FVector Target_Location, float DeltaSeconds)
 {
-	switch (behaviour)
+	switch (Behaviour)
 	{
 	case EBehaviours::Undefined:
 		UE_LOG(LogTemp, Log, TEXT("Undefined"));
 		break;
 	case EBehaviours::Seek:
-		MoveSeek(Location);
+		MoveSeek(Target_Location, DeltaSeconds);
 		break;
 	case EBehaviours::Flee:
-		MoveFlee(Location);
+		MoveFlee(Target_Location, DeltaSeconds);
 		break;
 	case EBehaviours::Pursuit:
-		MovePursuit(Location);
+		MovePursuit(Target_Location, DeltaSeconds);
 		break;
 	case EBehaviours::Evade:
-		MoveEvade(Location);
+		MoveEvade(Target_Location, DeltaSeconds);
 		break;
 	case EBehaviours::Arrival:
-		MoveArrival(Location);
+		MoveArrival(Target_Location, DeltaSeconds);
 		break;
 	default:
 		UE_LOG(LogTemp, Log, TEXT("Default"));
@@ -76,64 +91,56 @@ void Asteering_player_controller::MoveTo(FVector Location)
 	}
 }
 
-void Asteering_player_controller::MoveSeek(FVector Location)
+void Asteering_player_controller::MoveSeek(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Seek %s"), *Location.ToString());
+	UE_LOG(LogTemp, Log, TEXT("Seek %s"), *Target_Location.ToString());
 
-	FVector character_location = character_->GetActorLocation();
-	FVector character_forward = character_->GetActorForwardVector();
-	FRotator character_rotation = character_->GetActorRotation();
-	FVector character_velocity = character_->GetVelocity();
+	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
+	
+	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce;
+	Steering_Force = Steering_Force.GetClampedToMaxSize(Player_Stats.MaxForce);
 
-	UE_LOG(LogTemp, Log, TEXT("\t%s"), *character_location.ToString());
-	UE_LOG(LogTemp, Log, TEXT("\t%s"), *character_forward.ToString());
+	const FVector Acceleration = Steering_Force / Player_Stats.Mass;
+	
+	Velocity += Acceleration * DeltaSeconds;
+	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
+	
+	const FVector ForwardDirection = character_->GetActorForwardVector();
 
-	FVector move_to_vector = UKismetMathLibrary::GetDirectionUnitVector(character_location, Location);
+	const FVector NewPosition = character_->GetActorLocation() + ForwardDirection * Velocity.Size() * DeltaSeconds;
+	character_->SetActorLocation(NewPosition);
 
-	/** Now each step consists on:
-	* Calculating the steering force : steering_force = truncate(steering_direction, max_force);
-	* Giving us the acceleration: acceleration = steering_force / mass;
-	* Now we can calculate the velocity: velocity = truncate(velocity + acceleration, max_speed);
-	* Thus setting the new position of the actor: character_->SetActorLocation((position + velocity), bSweep=true);
-	* 
-	* Then recalculate the vehicle's orientation:
-	* new_forward = normalize(velocity);
-	* new_side = cross(new_forward, approximate_up);
-	* new_up = cross(new_forward, new_side);
-	* 
-	* The idea is that the approximate up is nearly perpendicular to the new forward direction,
-	* because frame-to-frame changes in orientation are typically small. 
-	* The new side direction will be perpendicular to new forward, from the definition of cross product.
-	* 
-	* The “desired velocity” is a vector in the direction from the character to the target
-	* The length of “desired velocity” is max_speed.
-	* The steering vector is the difference between this desired velocity and the character’s current velocity.
-	* 
-	* desired_velocity = normalize (target - position) * max_speed ;
-	* steering = desired_velocity - velocity;
-	* 
-	* If character continues to seek it will eventually pass through the target and then turn back to approach again.
-	*/
+	if (!Velocity.IsNearlyZero())
+	{
+		FRotator TargetRotation = Velocity.Rotation();
+		const FRotator CurrentRotation = character_->GetActorRotation();
 
-	// character_->SetActorLocation(Location, true);
+		TargetRotation.Roll = 0.f;
+		TargetRotation.Pitch = 0.f;
+		
+		const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaSeconds, Player_Stats.RotationSpeed);
+
+		character_->SetActorRotation(SmoothedRotation);
+	}
+
 }
 
-void Asteering_player_controller::MoveFlee(FVector Location)
+void Asteering_player_controller::MoveFlee(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Flee %s"), *Location.ToString());
+	UE_LOG(LogTemp, Log, TEXT("Flee %s"), *Target_Location.ToString());
 }
 
-void Asteering_player_controller::MovePursuit(FVector Location)
+void Asteering_player_controller::MovePursuit(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Pursuit %s"), *Location.ToString());
+	UE_LOG(LogTemp, Log, TEXT("Pursuit %s"), *Target_Location.ToString());
 }
 
-void Asteering_player_controller::MoveEvade(FVector Location)
+void Asteering_player_controller::MoveEvade(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Evade %s"), *Location.ToString());
+	UE_LOG(LogTemp, Log, TEXT("Evade %s"), *Target_Location.ToString());
 }
 
-void Asteering_player_controller::MoveArrival(FVector Location)
+void Asteering_player_controller::MoveArrival(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Arrival %s"), *Location.ToString());
+	UE_LOG(LogTemp, Log, TEXT("Arrival %s"), *Target_Location.ToString());
 }
