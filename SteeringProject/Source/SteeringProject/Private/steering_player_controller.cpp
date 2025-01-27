@@ -68,7 +68,7 @@ void Asteering_player_controller::MoveTo(const FVector Target_Location, float De
 	switch (Behaviour)
 	{
 	case EBehaviours::Undefined:
-		UE_LOG(LogTemp, Log, TEXT("Undefined"));
+		UE_LOG(LogTemp, Error, TEXT("Undefined"));
 		break;
 	case EBehaviours::Seek:
 		MoveSeek(Target_Location, DeltaSeconds);
@@ -91,7 +91,7 @@ void Asteering_player_controller::MoveTo(const FVector Target_Location, float De
 	}
 }
 
-void Asteering_player_controller::MoveSeek(const FVector& Target_Location, float DeltaSeconds)
+void Asteering_player_controller::MoveSeek(const FVector& Target_Location, const float DeltaSeconds)
 {
 	UE_LOG(LogTemp, Log, TEXT("Seek %s"), *Target_Location.ToString());
 
@@ -105,10 +105,7 @@ void Asteering_player_controller::MoveSeek(const FVector& Target_Location, float
 	Velocity += Acceleration * DeltaSeconds;
 	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
 	
-	const FVector ForwardDirection = character_->GetActorForwardVector();
-
-	const FVector NewPosition = character_->GetActorLocation() + ForwardDirection * Velocity.Size() * DeltaSeconds;
-	character_->SetActorLocation(NewPosition);
+	character_->AddMovementInput(character_->GetActorForwardVector(), Velocity.Size(), true);
 
 	if (!Velocity.IsNearlyZero())
 	{
