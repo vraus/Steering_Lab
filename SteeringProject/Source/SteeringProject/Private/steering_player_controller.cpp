@@ -125,6 +125,31 @@ void Asteering_player_controller::MoveSeek(const FVector& Target_Location, const
 void Asteering_player_controller::MoveFlee(const FVector& Target_Location, float DeltaSeconds)
 {
 	UE_LOG(LogTemp, Log, TEXT("Flee %s"), *Target_Location.ToString());
+
+	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
+
+	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce * -1;
+	Steering_Force = Steering_Force.GetClampedToMaxSize(Player_Stats.MaxForce);
+
+	const FVector Acceleration = Steering_Force / Player_Stats.Mass;
+
+	Velocity += Acceleration * DeltaSeconds;
+	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
+
+	character_->AddMovementInput(character_->GetActorForwardVector(), Velocity.Size(), true);
+
+	if (!Velocity.IsNearlyZero())
+	{
+		FRotator TargetRotation = Velocity.Rotation();
+		const FRotator CurrentRotation = character_->GetActorRotation();
+
+		TargetRotation.Roll = 0.f;
+		TargetRotation.Pitch = 0.f;
+
+		const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaSeconds, Player_Stats.RotationSpeed);
+
+		character_->SetActorRotation(SmoothedRotation);
+	}
 }
 
 void Asteering_player_controller::MovePursuit(const FVector& Target_Location, float DeltaSeconds)
@@ -140,4 +165,29 @@ void Asteering_player_controller::MoveEvade(const FVector& Target_Location, floa
 void Asteering_player_controller::MoveArrival(const FVector& Target_Location, float DeltaSeconds)
 {
 	UE_LOG(LogTemp, Log, TEXT("Arrival %s"), *Target_Location.ToString());
+
+	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
+
+	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce;
+	Steering_Force = Steering_Force.GetClampedToMaxSize(Player_Stats.MaxForce);
+
+	const FVector Acceleration = Steering_Force / Player_Stats.Mass;
+
+	Velocity += Acceleration * DeltaSeconds;
+	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
+
+	character_->AddMovementInput(character_->GetActorForwardVector(), Velocity.Size(), true);
+
+	if (!Velocity.IsNearlyZero())
+	{
+		FRotator TargetRotation = Velocity.Rotation();
+		const FRotator CurrentRotation = character_->GetActorRotation();
+
+		TargetRotation.Roll = 0.f;
+		TargetRotation.Pitch = 0.f;
+
+		const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaSeconds, Player_Stats.RotationSpeed);
+
+		character_->SetActorRotation(SmoothedRotation);
+	}
 }
