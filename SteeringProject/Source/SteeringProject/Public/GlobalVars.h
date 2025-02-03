@@ -43,4 +43,7 @@ struct FMovableActorInfos
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float SlowingDistance;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float StoppingDistance;
 };
