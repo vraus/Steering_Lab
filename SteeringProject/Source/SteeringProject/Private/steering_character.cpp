@@ -12,6 +12,7 @@ Asteering_character::Asteering_character()
 	ActorInfos.MaxSpeed = 600.f;
 	ActorInfos.MaxForce = 600.f;
 	ActorInfos.RotationSpeed = 600.f;
+	ActorInfos.SlowingDistance = 100.f;
 
 	bUseControllerRotationYaw = false;
 }

@@ -93,8 +93,6 @@ void Asteering_player_controller::MoveTo(const FVector Target_Location, float De
 
 void Asteering_player_controller::MoveSeek(const FVector& Target_Location, const float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Seek %s"), *Target_Location.ToString());
-
 	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
 	
 	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce;
@@ -124,8 +122,6 @@ void Asteering_player_controller::MoveSeek(const FVector& Target_Location, const
 
 void Asteering_player_controller::MoveFlee(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Flee %s"), *Target_Location.ToString());
-
 	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
 
 	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce * -1;
@@ -164,21 +160,28 @@ void Asteering_player_controller::MoveEvade(const FVector& Target_Location, floa
 
 void Asteering_player_controller::MoveArrival(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Arrival %s"), *Target_Location.ToString());
+	const FVector Target_Offset = (Target_Location - character_->GetActorLocation());
+	const FVector Steering_Direction = Target_Offset.GetSafeNormal();
 
-	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
+	float Distance = Target_Offset.Length();
+	float SlowingDistance = (Distance / Player_Stats.SlowingDistance);
+	float RampedSpeed = Player_Stats.MaxSpeed * SlowingDistance;
+	UE_LOG(LogTemp, Log, TEXT("Distance / SlowingDistance = %f"), (Distance / Player_Stats.SlowingDistance));
+	float ClippedSpeed = (RampedSpeed <= Player_Stats.MaxSpeed) ? RampedSpeed : Player_Stats.MaxSpeed;
 
-	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce;
+	auto DesiredVelocity = Steering_Direction * ClippedSpeed;
+
+	FVector Steering_Force = DesiredVelocity - Velocity;
 	Steering_Force = Steering_Force.GetClampedToMaxSize(Player_Stats.MaxForce);
 
-	const FVector Acceleration = Steering_Force / Player_Stats.Mass;
+	const FVector Acceleration = (Steering_Force / Player_Stats.Mass);
 
-	Velocity += Acceleration * DeltaSeconds;
-	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
+	Velocity += Acceleration;
+	Velocity = Velocity.GetClampedToMaxSize(Acceleration.Size());
 
 	character_->AddMovementInput(character_->GetActorForwardVector(), Velocity.Size(), true);
 
-	if (!Velocity.IsNearlyZero())
+	if (!Velocity.IsNearlyZero() && SlowingDistance >= 1)
 	{
 		FRotator TargetRotation = Velocity.Rotation();
 		const FRotator CurrentRotation = character_->GetActorRotation();

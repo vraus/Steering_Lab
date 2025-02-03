@@ -32,17 +32,6 @@ struct FMovableActorInfos
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Mass;
 
-	/** For now I don't need this...
-		UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FVector Position;
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FVector Velocity;
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FRotator Orientation;
-	*/
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float MaxSpeed;
 
@@ -51,4 +40,7 @@ struct FMovableActorInfos
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float RotationSpeed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float SlowingDistance;
 };
