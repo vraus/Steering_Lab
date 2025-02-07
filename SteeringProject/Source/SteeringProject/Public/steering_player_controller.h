@@ -9,6 +9,7 @@
 
 // Core
 #include "CoreMinimal.h"
+#include "TargetCharacter.h"
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
 #include "steering_player_controller.generated.h"
@@ -69,7 +70,7 @@ private:
 	void MoveEvade(const FVector& Target_Location, float DeltaSeconds);
 	void MoveArrival(const FVector& Target_Location, float DeltaSeconds);
 
-	
+	ATargetCharacter *TargetCharacter;
 	Asteering_character *character_;
 	bool bShouldMove;
 	FVector Velocity;
