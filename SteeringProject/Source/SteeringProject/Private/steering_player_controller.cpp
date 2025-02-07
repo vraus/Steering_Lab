@@ -208,7 +208,7 @@ void Asteering_player_controller::MoveArrival(const FVector& Target_Location, fl
 	FVector TargetOffset = Target_Location - character_->GetActorLocation();
 	float Distance = TargetOffset.Size();
 
-	if (Distance < Player_Stats.StoppingDistance)
+	if (Distance <= Player_Stats.StoppingDistance)
 	{
 		Velocity = FVector::ZeroVector;
 		bShouldMove = false;
