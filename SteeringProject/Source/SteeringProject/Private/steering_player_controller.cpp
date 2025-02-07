@@ -14,6 +14,10 @@ Asteering_player_controller::Asteering_player_controller(): ShortPressThreshold(
                                                             SetDestinationClickAction(nullptr),
                                                             bMoveToMouseCursor(false)
 {
+	TargetCharacter = nullptr;
+	character_ = nullptr;
+	Player_Stats = {};
+	
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
@@ -27,6 +31,20 @@ Asteering_player_controller::Asteering_player_controller(): ShortPressThreshold(
 void Asteering_player_controller::SetMovementBehaviour(EBehaviours New_Behaviour)
 {
 	Behaviour = New_Behaviour;
+
+	// Unsure that the character start chasing or evading when New behavior set to said behaviors, this even if bShouldMove is false meaning the player is not curently moving.
+	switch (Behaviour)
+	{
+	case EBehaviours::Pursuit:
+		bShouldMove = true;
+		break;
+	case EBehaviours::Evade:
+		bMoveToMouseCursor = true;
+		break;
+	default:
+			break;
+	}
+	
 	UE_LOG(LogTemp, Display, TEXT("New Behaviour received"));
 }
 
@@ -41,6 +59,14 @@ void Asteering_player_controller::SetCharacter(Asteering_character* Player_Pawn)
 	}
 }
 
+void Asteering_player_controller::SetTargetCharacter(ATargetCharacter* Target_Character)
+{
+	if (Target_Character)
+	{
+		TargetCharacter = Target_Character;
+	}
+}
+
 void Asteering_player_controller::BeginPlay()
 {
 	Super::BeginPlay();
@@ -52,7 +78,9 @@ void Asteering_player_controller::Tick(float DeltaSeconds)
 
 	if (!bShouldMove) return;
 
-	MoveTo(CachedDestination, DeltaSeconds);
+	if (TargetCharacter != nullptr) TargetCharacter_Location = TargetCharacter->GetActorLocation();
+
+	MoveTo(CachedDestination, ((TargetCharacter == nullptr) ? FVector::ZeroVector : TargetCharacter_Location), DeltaSeconds);
 }
 
 void Asteering_player_controller::OnInputStarted()
@@ -63,7 +91,7 @@ void Asteering_player_controller::OnInputStarted()
 	UE_LOG(LogTemp, Log, TEXT("Input Started"));
 }
 
-void Asteering_player_controller::MoveTo(const FVector Target_Location, float DeltaSeconds)
+void Asteering_player_controller::MoveTo(const FVector Target_Location, const FVector TargetChar_Location, float DeltaSeconds)
 {
 	switch (Behaviour)
 	{
@@ -77,10 +105,10 @@ void Asteering_player_controller::MoveTo(const FVector Target_Location, float De
 		MoveFlee(Target_Location, DeltaSeconds);
 		break;
 	case EBehaviours::Pursuit:
-		MovePursuit(Target_Location, DeltaSeconds);
+		MoveSeek(TargetChar_Location, DeltaSeconds);
 		break;
 	case EBehaviours::Evade:
-		MoveEvade(Target_Location, DeltaSeconds);
+		MoveFlee(TargetChar_Location, DeltaSeconds);
 		break;
 	case EBehaviours::Arrival:
 		MoveArrival(Target_Location, DeltaSeconds);
@@ -93,114 +121,118 @@ void Asteering_player_controller::MoveTo(const FVector Target_Location, float De
 
 void Asteering_player_controller::MoveSeek(const FVector& Target_Location, const float DeltaSeconds)
 {
-	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
-	
-	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce;
-	Steering_Force = Steering_Force.GetClampedToMaxSize(Player_Stats.MaxForce);
+	FVector DesiredVelocity = (Target_Location - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
 
-	const FVector Acceleration = Steering_Force / Player_Stats.Mass;
-	
-	Velocity += Acceleration * DeltaSeconds;
-	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
-	
-	character_->AddMovementInput(character_->GetActorForwardVector(), Velocity.Size(), true);
+	FVector Steering = DesiredVelocity - character_->GetVelocity();
 
-	if (!Velocity.IsNearlyZero())
-	{
-		FRotator TargetRotation = Velocity.Rotation();
-		const FRotator CurrentRotation = character_->GetActorRotation();
+	FRotator TargetRotation = DesiredVelocity.Rotation();
+	TargetRotation.Roll = 0.f;
+	TargetRotation.Pitch = 0.f;
 
-		TargetRotation.Roll = 0.f;
-		TargetRotation.Pitch = 0.f;
-		
-		const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaSeconds, Player_Stats.RotationSpeed);
+	FRotator CurrentRotation = character_->GetActorRotation();
+	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
 
-		character_->SetActorRotation(SmoothedRotation);
-	}
+	character_->SetActorRotation(SmoothedRotation);
 
+	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
+
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), Target_Location, 50, 12, FColor::Red, false, 0.1f);
 }
 
 void Asteering_player_controller::MoveFlee(const FVector& Target_Location, float DeltaSeconds)
 {
-	const FVector Steering_Direction = (Target_Location - character_->GetActorLocation()).GetSafeNormal();
+	FVector DesiredVelocity = (character_->GetActorLocation() - Target_Location).GetSafeNormal() * Player_Stats.MaxSpeed;
 
-	FVector Steering_Force = Steering_Direction * Player_Stats.MaxForce * -1;
-	Steering_Force = Steering_Force.GetClampedToMaxSize(Player_Stats.MaxForce);
+	FVector Steering = DesiredVelocity - character_->GetVelocity();
 
-	const FVector Acceleration = Steering_Force / Player_Stats.Mass;
+	FRotator TargetRotation = DesiredVelocity.Rotation();
+	TargetRotation.Roll = 0.f;
+	TargetRotation.Pitch = 0.f;
 
-	Velocity += Acceleration * DeltaSeconds;
-	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
+	FRotator CurrentRotation = character_->GetActorRotation();
+	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
 
-	character_->AddMovementInput(character_->GetActorForwardVector(), Velocity.Size(), true);
+	character_->SetActorRotation(SmoothedRotation);
 
-	if (!Velocity.IsNearlyZero())
-	{
-		FRotator TargetRotation = Velocity.Rotation();
-		const FRotator CurrentRotation = character_->GetActorRotation();
+	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-		TargetRotation.Roll = 0.f;
-		TargetRotation.Pitch = 0.f;
-
-		const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaSeconds, Player_Stats.RotationSpeed);
-
-		character_->SetActorRotation(SmoothedRotation);
-	}
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), Target_Location, 50, 12, FColor::Red, false, 0.1f);
 }
 
 void Asteering_player_controller::MovePursuit(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Pursuit %s"), *Target_Location.ToString());
+	FVector DesiredVelocity = (Target_Location - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
+
+	FVector Steering = DesiredVelocity - character_->GetVelocity();
+
+	FRotator TargetRotation = DesiredVelocity.Rotation();
+	TargetRotation.Roll = 0.f;
+	TargetRotation.Pitch = 0.f;
+
+	FRotator CurrentRotation = character_->GetActorRotation();
+	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+
+	character_->SetActorRotation(SmoothedRotation);
+
+	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
+
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), Target_Location, 1, 12, FColor::Red, false, 0.1f);
 }
 
 void Asteering_player_controller::MoveEvade(const FVector& Target_Location, float DeltaSeconds)
 {
-	UE_LOG(LogTemp, Log, TEXT("Evade %s"), *Target_Location.ToString());
+	FVector DesiredVelocity = (character_->GetActorLocation() - Target_Location).GetSafeNormal() * Player_Stats.MaxSpeed;
+
+	FVector Steering = DesiredVelocity - character_->GetVelocity();
+
+	FRotator TargetRotation = DesiredVelocity.Rotation();
+	TargetRotation.Roll = 0.f;
+	TargetRotation.Pitch = 0.f;
+
+	FRotator CurrentRotation = character_->GetActorRotation();
+	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+
+	character_->SetActorRotation(SmoothedRotation);
+
+	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
+
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), Target_Location, 1, 12, FColor::Red, false, 0.1f);
 }
 
 void Asteering_player_controller::MoveArrival(const FVector& Target_Location, float DeltaSeconds)
 {
-	FVector TargetOffset = FVector(Target_Location.X, Target_Location.Y, 0.f) - FVector(character_->GetActorLocation().X, character_->GetActorLocation().Y, 0.f);
+	FVector TargetOffset = Target_Location - character_->GetActorLocation();
 	float Distance = TargetOffset.Size();
 
-	UE_LOG(LogTemp, Log, TEXT("Distance: %f <? StopDistance :%f"), Distance, Player_Stats.StoppingDistance);
-
-	// Vérifie si la distance est inférieure à un seuil pour s'arrêter complètement
 	if (Distance < Player_Stats.StoppingDistance)
 	{
 		Velocity = FVector::ZeroVector;
-		bShouldMove = false; // Arrêt du mouvement
+		bShouldMove = false;
 		return;
 	}
 
-	// Calculer la vitesse rampée et la vitesse souhaitée
-	float AnticipationFactor = 1.5f;
-	float EffectiveSlowingDistance = Player_Stats.SlowingDistance * AnticipationFactor;
-
-	float SpeedFactor = FMath::Square(Distance / EffectiveSlowingDistance);
-	float ClippedSpeed = Player_Stats.MaxSpeed * FMath::Clamp(SpeedFactor, 0.0f, 1.0f);
+	float RampedSpeed = Player_Stats.MaxSpeed * (Distance / Player_Stats.SlowingDistance);
+	float ClippedSpeed = FMath::Min(RampedSpeed, Player_Stats.MaxSpeed);
 
 	FVector DesiredVelocity = TargetOffset.GetSafeNormal() * ClippedSpeed;
-	FVector Steering = DesiredVelocity - Velocity;
-	FVector Steering_Force = Steering.GetClampedToMaxSize(Player_Stats.MaxForce);
-	FVector Acceleration = Steering_Force / Player_Stats.Mass;
 
-	Velocity += Acceleration * DeltaSeconds;
-	Velocity = Velocity.GetClampedToMaxSize(Player_Stats.MaxSpeed);
+	FVector Steering = DesiredVelocity - character_->GetVelocity();
 
-	// Déplacement du personnage
-	character_->AddMovementInput(character_->GetActorForwardVector(), Velocity.Size(), true);
+	FRotator TargetRotation = DesiredVelocity.Rotation();
+	TargetRotation.Roll = 0.f;
+	TargetRotation.Pitch = 0.f;
 
-	// Rotation smooth du personnage
-	if (!Velocity.IsNearlyZero())
-	{
-		FRotator TargetRotation = Velocity.Rotation();
-		FRotator CurrentRotation = character_->GetActorRotation();
+	FRotator CurrentRotation = character_->GetActorRotation();
+	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
 
-		TargetRotation.Roll = 0.f;
-		TargetRotation.Pitch = 0.f;
+	character_->SetActorRotation(SmoothedRotation);
 
-		FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, DeltaSeconds, Player_Stats.RotationSpeed);
-		character_->SetActorRotation(SmoothedRotation);
-	}
+	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
+
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), Target_Location, Player_Stats.StoppingDistance, 12, FColor::Red, false, 0.1f);
 }

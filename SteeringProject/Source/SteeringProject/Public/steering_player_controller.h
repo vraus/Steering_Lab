@@ -31,6 +31,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Steering")
 	void SetCharacter(Asteering_character* Player_Pawn);
 
+	UFUNCTION(BlueprintCallable, Category = "Steering")
+	void SetTargetCharacter(ATargetCharacter* Target_Character);
+
 	/** Time Threshold to know if it was a short press */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	float ShortPressThreshold;
@@ -56,7 +59,7 @@ protected:
 
 	/** Movement functions */
 	UFUNCTION(BlueprintCallable, Category = "Steering")
-	void MoveTo(const FVector Target_Location, float DeltaSeconds);
+	void MoveTo(const FVector Target_Location, const FVector TargetChar_Location, float DeltaSeconds);
 
 	EBehaviours Behaviour;
 
@@ -77,5 +80,6 @@ private:
 	FMovableActorInfos Player_Stats;
 
 	FVector CachedDestination;
+	FVector TargetCharacter_Location;
 	float FollowTime;
 };
