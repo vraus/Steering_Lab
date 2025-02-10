@@ -14,6 +14,7 @@ Asteering_character::Asteering_character()
 	ActorInfos.RotationSpeed = 6000.f;
 	ActorInfos.SlowingDistance = 600.f;
 	ActorInfos.StoppingDistance = 50.f;
+	ActorInfos.FleeThreshold = 25.f;
 
 	bUseControllerRotationYaw = false;
 

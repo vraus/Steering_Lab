@@ -195,6 +195,9 @@ void Asteering_player_controller::MoveEvade()
 {
 	FVector Target_FuturLocation = TargetCharacter_Location + TargetCharacter_Velocity / 5;
 
+	if ((Target_FuturLocation - character_->GetActorLocation()).Length() <= Player_Stats.FleeThreshold)
+		UE_LOG(LogTemp, Warning, TEXT("HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!!"));
+
 	FVector DesiredVelocity = (character_->GetActorLocation() - Target_FuturLocation).GetSafeNormal() * Player_Stats.MaxSpeed;
 
 	FVector Steering = DesiredVelocity - character_->GetVelocity();

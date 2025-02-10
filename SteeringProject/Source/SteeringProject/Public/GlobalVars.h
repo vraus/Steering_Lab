@@ -53,4 +53,8 @@ struct FMovableActorInfos
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float StoppingDistance;
+
+	/** When the character flees, and the target character reaches this threshold distance, the character will change direction. */
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	float FleeThreshold;
 };
