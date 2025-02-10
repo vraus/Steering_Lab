@@ -35,5 +35,4 @@ public:
 
 	FMovableActorInfos GetActorInfos() const { return ActorInfos;  }
 private:
-
 };

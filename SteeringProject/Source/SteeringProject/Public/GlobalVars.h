@@ -20,6 +20,13 @@ enum class EBehaviours : uint8
 	Arrival UMETA(DisplayName = "Arrival"),
 };
 
+UENUM(BlueprintType)
+enum class ESliders : uint8
+{
+	Undefined UMETA(DisplayName = "Undefined"),
+	RotationSpeed UMETA(DisplayName = "Rotation Speed"),
+};
+
 /**
 * Struct containing all the infos relative to the movement speed and direction of the actor
 */

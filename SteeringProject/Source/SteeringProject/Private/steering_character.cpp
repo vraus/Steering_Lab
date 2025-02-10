@@ -16,6 +16,7 @@ Asteering_character::Asteering_character()
 	ActorInfos.StoppingDistance = 50.f;
 
 	bUseControllerRotationYaw = false;
+
 }
 
 // Called when the game starts or when spawned

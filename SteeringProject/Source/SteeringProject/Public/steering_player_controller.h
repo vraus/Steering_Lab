@@ -41,6 +41,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Steering")
 	void OnInputStarted();
 
+	UFUNCTION(BlueprintCallable, Category = "Steering")
+	void UpdatePlayerInfos(FMovableActorInfos NewPlayerInfos) { Player_Stats = NewPlayerInfos; }
+
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
 	UInputMappingContext* DefaultMappingContext;
