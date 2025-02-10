@@ -60,9 +60,11 @@ protected:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	/** Movement functions */
+	/** Movement functions
+	* Make Character move to Cached Destination
+	*/
 	UFUNCTION(BlueprintCallable, Category = "Steering")
-	void MoveTo(const FVector Target_Location, const FVector TargetChar_Location, float DeltaSeconds);
+	void MoveTo();
 
 	EBehaviours Behaviour;
 
@@ -70,11 +72,11 @@ protected:
 	void SetCachedLocation(const FVector& NewLocation) { CachedDestination = NewLocation; }
 
 private:
-	void MoveSeek(const FVector& Target_Location, float DeltaSeconds);
-	void MoveFlee(const FVector& Target_Location, float DeltaSeconds);
-	void MovePursuit(const FVector& Target_Location, float DeltaSeconds);
-	void MoveEvade(const FVector& Target_Location, float DeltaSeconds);
-	void MoveArrival(const FVector& Target_Location, float DeltaSeconds);
+	void MoveSeek();
+	void MoveFlee();
+	void MovePursuit();
+	void MoveEvade();
+	void MoveArrival();
 
 	ATargetCharacter *TargetCharacter;
 	Asteering_character *character_;
@@ -84,5 +86,6 @@ private:
 
 	FVector CachedDestination;
 	FVector TargetCharacter_Location;
+	FVector TargetCharacter_Velocity;
 	float FollowTime;
 };

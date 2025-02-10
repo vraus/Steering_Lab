@@ -39,7 +39,7 @@ void Asteering_player_controller::SetMovementBehaviour(EBehaviours New_Behaviour
 		bShouldMove = true;
 		break;
 	case EBehaviours::Evade:
-		bMoveToMouseCursor = true;
+		bShouldMove = true;
 		break;
 	default:
 			break;
@@ -78,9 +78,16 @@ void Asteering_player_controller::Tick(float DeltaSeconds)
 
 	if (!bShouldMove) return;
 
-	if (TargetCharacter != nullptr) TargetCharacter_Location = TargetCharacter->GetActorLocation();
+	if (TargetCharacter != nullptr) {
+		TargetCharacter_Location = TargetCharacter->GetActorLocation();
+		TargetCharacter_Velocity = TargetCharacter->GetVelocity();
+	}
+	else {
+		TargetCharacter_Location = FVector::ZeroVector;
+		TargetCharacter_Velocity = FVector::ZeroVector;
+	}
 
-	MoveTo(CachedDestination, ((TargetCharacter == nullptr) ? FVector::ZeroVector : TargetCharacter_Location), DeltaSeconds);
+	MoveTo();
 }
 
 void Asteering_player_controller::OnInputStarted()
@@ -91,7 +98,7 @@ void Asteering_player_controller::OnInputStarted()
 	UE_LOG(LogTemp, Log, TEXT("Input Started"));
 }
 
-void Asteering_player_controller::MoveTo(const FVector Target_Location, const FVector TargetChar_Location, float DeltaSeconds)
+void Asteering_player_controller::MoveTo()
 {
 	switch (Behaviour)
 	{
@@ -99,19 +106,19 @@ void Asteering_player_controller::MoveTo(const FVector Target_Location, const FV
 		UE_LOG(LogTemp, Error, TEXT("Undefined"));
 		break;
 	case EBehaviours::Seek:
-		MoveSeek(Target_Location, DeltaSeconds);
+		MoveSeek();
 		break;
 	case EBehaviours::Flee:
-		MoveFlee(Target_Location, DeltaSeconds);
+		MoveFlee();
 		break;
 	case EBehaviours::Pursuit:
-		MoveSeek(TargetChar_Location, DeltaSeconds);
+		MovePursuit();
 		break;
 	case EBehaviours::Evade:
-		MoveFlee(TargetChar_Location, DeltaSeconds);
+		MoveEvade();
 		break;
 	case EBehaviours::Arrival:
-		MoveArrival(Target_Location, DeltaSeconds);
+		MoveArrival();
 		break;
 	default:
 		UE_LOG(LogTemp, Log, TEXT("Default"));
@@ -119,9 +126,9 @@ void Asteering_player_controller::MoveTo(const FVector Target_Location, const FV
 	}
 }
 
-void Asteering_player_controller::MoveSeek(const FVector& Target_Location, const float DeltaSeconds)
+void Asteering_player_controller::MoveSeek()
 {
-	FVector DesiredVelocity = (Target_Location - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
+	FVector DesiredVelocity = (CachedDestination - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
 
 	FVector Steering = DesiredVelocity - character_->GetVelocity();
 
@@ -136,13 +143,13 @@ void Asteering_player_controller::MoveSeek(const FVector& Target_Location, const
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), Target_Location, 50, 12, FColor::Red, false, 0.1f);
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), CachedDestination, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), CachedDestination, 50, 12, FColor::Red, false, 0.1f);
 }
 
-void Asteering_player_controller::MoveFlee(const FVector& Target_Location, float DeltaSeconds)
+void Asteering_player_controller::MoveFlee()
 {
-	FVector DesiredVelocity = (character_->GetActorLocation() - Target_Location).GetSafeNormal() * Player_Stats.MaxSpeed;
+	FVector DesiredVelocity = (character_->GetActorLocation() - CachedDestination).GetSafeNormal() * Player_Stats.MaxSpeed;
 
 	FVector Steering = DesiredVelocity - character_->GetVelocity();
 
@@ -157,13 +164,15 @@ void Asteering_player_controller::MoveFlee(const FVector& Target_Location, float
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), Target_Location, 50, 12, FColor::Red, false, 0.1f);
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), CachedDestination, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), CachedDestination, 50, 12, FColor::Red, false, 0.1f);
 }
 
-void Asteering_player_controller::MovePursuit(const FVector& Target_Location, float DeltaSeconds)
+void Asteering_player_controller::MovePursuit()
 {
-	FVector DesiredVelocity = (Target_Location - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
+	FVector Target_FuturLocation = TargetCharacter_Location + TargetCharacter_Velocity / 5;
+
+	FVector DesiredVelocity = (Target_FuturLocation - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
 
 	FVector Steering = DesiredVelocity - character_->GetVelocity();
 
@@ -178,13 +187,15 @@ void Asteering_player_controller::MovePursuit(const FVector& Target_Location, fl
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), Target_Location, 1, 12, FColor::Red, false, 0.1f);
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_FuturLocation, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), Target_FuturLocation, 50, 12, FColor::Red, false, 0.1f);
 }
 
-void Asteering_player_controller::MoveEvade(const FVector& Target_Location, float DeltaSeconds)
+void Asteering_player_controller::MoveEvade()
 {
-	FVector DesiredVelocity = (character_->GetActorLocation() - Target_Location).GetSafeNormal() * Player_Stats.MaxSpeed;
+	FVector Target_FuturLocation = TargetCharacter_Location + TargetCharacter_Velocity / 5;
+
+	FVector DesiredVelocity = (character_->GetActorLocation() - Target_FuturLocation).GetSafeNormal() * Player_Stats.MaxSpeed;
 
 	FVector Steering = DesiredVelocity - character_->GetVelocity();
 
@@ -199,13 +210,13 @@ void Asteering_player_controller::MoveEvade(const FVector& Target_Location, floa
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), Target_Location, 1, 12, FColor::Red, false, 0.1f);
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_FuturLocation, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), Target_FuturLocation, 50, 12, FColor::Red, false, 0.1f);
 }
 
-void Asteering_player_controller::MoveArrival(const FVector& Target_Location, float DeltaSeconds)
+void Asteering_player_controller::MoveArrival()
 {
-	FVector TargetOffset = Target_Location - character_->GetActorLocation();
+	FVector TargetOffset = CachedDestination - character_->GetActorLocation();
 	float Distance = TargetOffset.Size();
 
 	if (Distance <= Player_Stats.StoppingDistance)
@@ -233,6 +244,6 @@ void Asteering_player_controller::MoveArrival(const FVector& Target_Location, fl
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_Location, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), Target_Location, Player_Stats.StoppingDistance, 12, FColor::Red, false, 0.1f);
+	DrawDebugLine(GetWorld(), character_->GetActorLocation(), CachedDestination, FColor::Blue, false, 0.1f, 0, 2.0f);
+	DrawDebugSphere(GetWorld(), CachedDestination, Player_Stats.StoppingDistance, 12, FColor::Red, false, 0.1f);
 }
