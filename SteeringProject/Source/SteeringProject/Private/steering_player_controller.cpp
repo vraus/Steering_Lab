@@ -26,9 +26,12 @@ Asteering_player_controller::Asteering_player_controller(): ShortPressThreshold(
 
 	bShouldMove = false;
 	Velocity = FVector::ZeroVector;
+
+	TargetCharacter_Location = FVector::ZeroVector;
+	TargetCharacter_Velocity = FVector::ZeroVector;
 }
 
-void Asteering_player_controller::SetMovementBehaviour(EBehaviours New_Behaviour)
+void Asteering_player_controller::SetMovementBehaviour(const EBehaviours New_Behaviour)
 {
 	Behaviour = New_Behaviour;
 
@@ -82,10 +85,6 @@ void Asteering_player_controller::Tick(float DeltaSeconds)
 		TargetCharacter_Location = TargetCharacter->GetActorLocation();
 		TargetCharacter_Velocity = TargetCharacter->GetVelocity();
 	}
-	else {
-		TargetCharacter_Location = FVector::ZeroVector;
-		TargetCharacter_Velocity = FVector::ZeroVector;
-	}
 
 	MoveTo();
 }
@@ -126,101 +125,112 @@ void Asteering_player_controller::MoveTo()
 	}
 }
 
-void Asteering_player_controller::MoveSeek()
+void Asteering_player_controller::MoveSeek() const
 {
-	FVector DesiredVelocity = (CachedDestination - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
+	const FVector DesiredVelocity = (CachedDestination - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
 
-	FVector Steering = DesiredVelocity - character_->GetVelocity();
+	const FVector Steering = DesiredVelocity - character_->GetVelocity();
 
 	FRotator TargetRotation = DesiredVelocity.Rotation();
 	TargetRotation.Roll = 0.f;
 	TargetRotation.Pitch = 0.f;
 
-	FRotator CurrentRotation = character_->GetActorRotation();
-	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+	const FRotator CurrentRotation = character_->GetActorRotation();
+	const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
 
 	character_->SetActorRotation(SmoothedRotation);
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), CachedDestination, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), CachedDestination, 50, 12, FColor::Red, false, 0.1f);
+	DrawLine(character_->GetActorLocation(), CachedDestination, FColor::Blue);
+	DrawSphere(CachedDestination, 15, FColor::Red);
 }
 
-void Asteering_player_controller::MoveFlee()
+void Asteering_player_controller::MoveFlee() const
 {
-	FVector DesiredVelocity = (character_->GetActorLocation() - CachedDestination).GetSafeNormal() * Player_Stats.MaxSpeed;
+	const FVector DesiredVelocity = (character_->GetActorLocation() - CachedDestination).GetSafeNormal() * Player_Stats.MaxSpeed;
 
-	FVector Steering = DesiredVelocity - character_->GetVelocity();
+	const FVector Steering = DesiredVelocity - character_->GetVelocity();
 
 	FRotator TargetRotation = DesiredVelocity.Rotation();
 	TargetRotation.Roll = 0.f;
 	TargetRotation.Pitch = 0.f;
 
-	FRotator CurrentRotation = character_->GetActorRotation();
-	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+	const FRotator CurrentRotation = character_->GetActorRotation();
+	const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
 
 	character_->SetActorRotation(SmoothedRotation);
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), CachedDestination, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), CachedDestination, 50, 12, FColor::Red, false, 0.1f);
+	DrawLine(character_->GetActorLocation(), CachedDestination, FColor::Blue);
+	DrawSphere(CachedDestination, 15, FColor::Red);
 }
 
-void Asteering_player_controller::MovePursuit()
+void Asteering_player_controller::MovePursuit() const
 {
-	FVector Target_FuturLocation = TargetCharacter_Location + TargetCharacter_Velocity / 5;
+	const FVector Target_FuturLocation = TargetCharacter_Location + TargetCharacter_Velocity * Player_Stats.PursuitPrediction;
 
-	FVector DesiredVelocity = (Target_FuturLocation - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
-
-	FVector Steering = DesiredVelocity - character_->GetVelocity();
+	const FVector DesiredVelocity = (Target_FuturLocation - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
+	const FVector Steering = DesiredVelocity - character_->GetVelocity();
 
 	FRotator TargetRotation = DesiredVelocity.Rotation();
 	TargetRotation.Roll = 0.f;
 	TargetRotation.Pitch = 0.f;
 
-	FRotator CurrentRotation = character_->GetActorRotation();
-	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+	const FRotator CurrentRotation = character_->GetActorRotation();
+	const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
 
 	character_->SetActorRotation(SmoothedRotation);
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_FuturLocation, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), Target_FuturLocation, 50, 12, FColor::Red, false, 0.1f);
+	DrawLine(character_->GetActorLocation(), Target_FuturLocation, FColor::Blue);
+	DrawSphere(Target_FuturLocation, 15, FColor::Red);
 }
 
 void Asteering_player_controller::MoveEvade()
 {
-	FVector Target_FuturLocation = TargetCharacter_Location + TargetCharacter_Velocity / 5;
+    const FVector Target_FutureLocation = TargetCharacter_Location + TargetCharacter_Velocity * Player_Stats.PursuitPrediction;
 
-	if ((Target_FuturLocation - character_->GetActorLocation()).Length() <= Player_Stats.FleeThreshold)
-		UE_LOG(LogTemp, Warning, TEXT("HAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!!"));
+    const float Distance = (Target_FutureLocation - character_->GetActorLocation()).Size();
+    FVector EvadeDirection = (character_->GetActorLocation() - Target_FutureLocation).GetSafeNormal();
+	const float CurrentTime = GetWorld()->GetTimeSeconds();
+	
+    if (Distance <= Player_Stats.FleeThreshold && CurrentTime - LastEvadeTime > Player_Stats.EvadeCooldown)
+    {
+    	const float RandomAngle = (FMath::RandBool()? 90.0f : -90.0f);
+    	EvadeDirection = character_->GetActorForwardVector().RotateAngleAxis(RandomAngle, FVector::UpVector);
+    	LastEvadeTime = CurrentTime;
+    }
 
-	FVector DesiredVelocity = (character_->GetActorLocation() - Target_FuturLocation).GetSafeNormal() * Player_Stats.MaxSpeed;
+    const FVector DesiredVelocity = EvadeDirection * Player_Stats.MaxSpeed;
+    const FVector Steering = DesiredVelocity - character_->GetVelocity();
 
-	FVector Steering = DesiredVelocity - character_->GetVelocity();
+    FRotator TargetRotation = DesiredVelocity.Rotation();
+    TargetRotation.Roll = 0.f;
+    TargetRotation.Pitch = 0.f;
 
-	FRotator TargetRotation = DesiredVelocity.Rotation();
-	TargetRotation.Roll = 0.f;
-	TargetRotation.Pitch = 0.f;
+    const FRotator CurrentRotation = character_->GetActorRotation();
+    const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), 
+                                                 (Distance <= Player_Stats.FleeThreshold) ? Player_Stats.RotationSpeed * 2 : Player_Stats.RotationSpeed);
 
-	FRotator CurrentRotation = character_->GetActorRotation();
-	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+    character_->SetActorRotation(SmoothedRotation);
 
-	character_->SetActorRotation(SmoothedRotation);
+    character_->AddMovementInput(character_->GetActorForwardVector(), Steering.Size(), true);
 
-	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
+	
+	DrawLine(character_->GetActorLocation(), Target_FutureLocation, FColor::Blue);
+	DrawSphere(Target_FutureLocation, 15, FColor::Red);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), Target_FuturLocation, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), Target_FuturLocation, 50, 12, FColor::Red, false, 0.1f);
+	DrawSphere(character_->GetActorLocation(), Player_Stats.FleeThreshold, FColor::Green);
 }
+
 
 void Asteering_player_controller::MoveArrival()
 {
-	FVector TargetOffset = CachedDestination - character_->GetActorLocation();
-	float Distance = TargetOffset.Size();
+	const FVector TargetOffset = CachedDestination - character_->GetActorLocation();
+	const float Distance = TargetOffset.Size();
 
 	if (Distance <= Player_Stats.StoppingDistance)
 	{
@@ -229,24 +239,34 @@ void Asteering_player_controller::MoveArrival()
 		return;
 	}
 
-	float RampedSpeed = Player_Stats.MaxSpeed * (Distance / Player_Stats.SlowingDistance);
-	float ClippedSpeed = FMath::Min(RampedSpeed, Player_Stats.MaxSpeed);
+	const float RampedSpeed = Player_Stats.MaxSpeed * (Distance / Player_Stats.SlowingDistance);
+	const float ClippedSpeed = FMath::Min(RampedSpeed, Player_Stats.MaxSpeed);
 
-	FVector DesiredVelocity = TargetOffset.GetSafeNormal() * ClippedSpeed;
+	const FVector DesiredVelocity = TargetOffset.GetSafeNormal() * ClippedSpeed;
 
-	FVector Steering = DesiredVelocity - character_->GetVelocity();
+	const FVector Steering = DesiredVelocity - character_->GetVelocity();
 
 	FRotator TargetRotation = DesiredVelocity.Rotation();
 	TargetRotation.Roll = 0.f;
 	TargetRotation.Pitch = 0.f;
 
-	FRotator CurrentRotation = character_->GetActorRotation();
-	FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+	const FRotator CurrentRotation = character_->GetActorRotation();
+	const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
 
 	character_->SetActorRotation(SmoothedRotation);
 
 	character_->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 
-	DrawDebugLine(GetWorld(), character_->GetActorLocation(), CachedDestination, FColor::Blue, false, 0.1f, 0, 2.0f);
-	DrawDebugSphere(GetWorld(), CachedDestination, Player_Stats.StoppingDistance, 12, FColor::Red, false, 0.1f);
+	DrawLine(character_->GetActorLocation(), CachedDestination, FColor::Blue);
+	DrawSphere(CachedDestination, Player_Stats.StoppingDistance, FColor::Red);
+}
+
+void Asteering_player_controller::DrawSphere(const FVector& Center, const float Radius, const FColor Color) const
+{
+	DrawDebugSphere(GetWorld(), Center, Radius, 12, Color, false, 0.f);
+}
+
+void Asteering_player_controller::DrawLine(const FVector& LineStart, const FVector& LineEnd, const FColor Color) const
+{
+	DrawDebugLine(GetWorld(), LineStart, LineEnd, Color, false, 0.f, 0, 2.f);
 }

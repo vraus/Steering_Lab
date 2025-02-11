@@ -25,6 +25,9 @@ enum class ESliders : uint8
 {
 	Undefined UMETA(DisplayName = "Undefined"),
 	RotationSpeed UMETA(DisplayName = "Rotation Speed"),
+	PursuitPrediction UMETA(DisplayName = "Pursuit Prediction"),
+	FleeThreshold UMETA(DisplayName = "Flee Threshold"),
+	EvadeCooldown UMETA(DisplayName = "Evade Cooldown"),
 };
 
 /**
@@ -55,6 +58,12 @@ struct FMovableActorInfos
 	float StoppingDistance;
 
 	/** When the character flees, and the target character reaches this threshold distance, the character will change direction. */
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float FleeThreshold;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float PursuitPrediction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float EvadeCooldown;
 };

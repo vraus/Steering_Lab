@@ -11,10 +11,12 @@ Asteering_character::Asteering_character()
 	ActorInfos.Mass = 1.f;
 	ActorInfos.MaxSpeed = 600.f;
 	ActorInfos.MaxForce = 600.f;
-	ActorInfos.RotationSpeed = 6000.f;
+	ActorInfos.RotationSpeed = 6.f;
 	ActorInfos.SlowingDistance = 600.f;
 	ActorInfos.StoppingDistance = 50.f;
-	ActorInfos.FleeThreshold = 25.f;
+	ActorInfos.FleeThreshold = 90.f;
+	ActorInfos.EvadeCooldown = .25f;
+	ActorInfos.EvadeCooldown = 2.f;
 
 	bUseControllerRotationYaw = false;
 

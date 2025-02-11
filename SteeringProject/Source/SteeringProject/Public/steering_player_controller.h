@@ -72,20 +72,27 @@ protected:
 	void SetCachedLocation(const FVector& NewLocation) { CachedDestination = NewLocation; }
 
 private:
-	void MoveSeek();
-	void MoveFlee();
-	void MovePursuit();
+	void MoveSeek() const;
+	void MoveFlee() const;
+	void MovePursuit() const;
 	void MoveEvade();
 	void MoveArrival();
 
 	ATargetCharacter *TargetCharacter;
 	Asteering_character *character_;
-	bool bShouldMove;
-	FVector Velocity;
+
 	FMovableActorInfos Player_Stats;
 
+	FVector Velocity;
 	FVector CachedDestination;
 	FVector TargetCharacter_Location;
 	FVector TargetCharacter_Velocity;
+
+	bool bShouldMove;
 	float FollowTime;
+	float LastEvadeTime;
+
+	/** Draw Debug Functions */
+	void DrawSphere(const FVector& Center, const float Radius, const FColor Color) const;
+	void DrawLine(const FVector& LineStart, const FVector& LineEnd, const FColor Color) const;
 };
