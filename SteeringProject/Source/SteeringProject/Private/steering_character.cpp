@@ -17,6 +17,7 @@ Asteering_character::Asteering_character()
 	ActorInfos.FleeThreshold = 90.f;
 	ActorInfos.EvadeCooldown = .25f;
 	ActorInfos.EvadeCooldown = 2.f;
+	ActorInfos.ValidatePathPointThreshold = 150.f;
 
 	bUseControllerRotationYaw = false;
 

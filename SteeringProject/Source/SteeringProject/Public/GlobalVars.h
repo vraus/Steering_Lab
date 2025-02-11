@@ -18,6 +18,9 @@ enum class EBehaviours : uint8
 	Pursuit UMETA(DisplayName = "Pursuit"),
 	Evade UMETA(DisplayName = "Evade"),
 	Arrival UMETA(DisplayName = "Arrival"),
+	Circuit UMETA(DisplayName = "Circuit"),
+	OneWay UMETA(DisplayName = "OneWay"),
+	TwoWay UMETA(DisplayName = "TwoWay"),
 };
 
 UENUM(BlueprintType)
@@ -66,4 +69,7 @@ struct FMovableActorInfos
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float EvadeCooldown;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float ValidatePathPointThreshold;
 };

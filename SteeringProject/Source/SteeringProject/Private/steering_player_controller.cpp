@@ -21,9 +21,12 @@ Asteering_player_controller::Asteering_player_controller(): ShortPressThreshold(
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;
 	CachedDestination = FVector::ZeroVector;
+	CachedDestinationBuffer.Add(FVector::ZeroVector);
 	FollowTime = 0.f;
 	Behaviour = EBehaviours::Undefined;
 
+	LastEvadeTime = 0.f;
+	bPathMode = false;
 	bShouldMove = false;
 	Velocity = FVector::ZeroVector;
 
@@ -38,11 +41,37 @@ void Asteering_player_controller::SetMovementBehaviour(const EBehaviours New_Beh
 	// Unsure that the character start chasing or evading when New behavior set to said behaviors, this even if bShouldMove is false meaning the player is not curently moving.
 	switch (Behaviour)
 	{
+	case EBehaviours::Arrival:
+		bPathMode = false;
+		break;
+	case EBehaviours::Seek:
+		bPathMode = false;
+		break;
+	case EBehaviours::Flee:
+		bPathMode = false;
+    	break;
 	case EBehaviours::Pursuit:
 		bShouldMove = true;
+		bPathMode = false;
 		break;
 	case EBehaviours::Evade:
 		bShouldMove = true;
+		bPathMode = false;
+		break;
+	case EBehaviours::Circuit:
+		ResetCachedDestinationBuffer();
+		bShouldMove = false;
+		bPathMode = true;
+		break;
+	case EBehaviours::OneWay:
+		ResetCachedDestinationBuffer();
+		bShouldMove = false;
+		bPathMode = true;
+		break;
+	case EBehaviours::TwoWay:
+		ResetCachedDestinationBuffer();
+		bShouldMove = false;
+		bPathMode = true;
 		break;
 	default:
 			break;
@@ -92,9 +121,16 @@ void Asteering_player_controller::Tick(float DeltaSeconds)
 void Asteering_player_controller::OnInputStarted()
 {
 	StopMovement();
-	bShouldMove = true;
 
-	UE_LOG(LogTemp, Log, TEXT("Input Started"));
+	if (!bPathMode)
+		bShouldMove = true;
+}
+
+void Asteering_player_controller::OnGoPath()
+{
+	CachedDestinationBuffer[0] = character_->GetActorLocation();
+	bPathMode = true;
+	bShouldMove = true;
 }
 
 void Asteering_player_controller::MoveTo()
@@ -119,10 +155,30 @@ void Asteering_player_controller::MoveTo()
 	case EBehaviours::Arrival:
 		MoveArrival();
 		break;
+	case EBehaviours::Circuit:
+		PathCircuit();
+		break;
+	case EBehaviours::OneWay:
+		PathOneWay();
+		break;
+	case EBehaviours::TwoWay:
+		PathTwoWay();
+		break;
 	default:
 		UE_LOG(LogTemp, Log, TEXT("Default"));
 		break;
 	}
+}
+
+void Asteering_player_controller::SetCachedLocation(const FVector& NewLocation)
+{
+	if (!bPathMode)
+	{
+		CachedDestination = NewLocation;
+		return;
+	}
+
+	CachedDestinationBuffer.Add(NewLocation);
 }
 
 void Asteering_player_controller::MoveSeek() const
@@ -259,6 +315,76 @@ void Asteering_player_controller::MoveArrival()
 
 	DrawLine(character_->GetActorLocation(), CachedDestination, FColor::Blue);
 	DrawSphere(CachedDestination, Player_Stats.StoppingDistance, FColor::Red);
+}
+
+void Asteering_player_controller::PathCircuit()
+{
+	if (CachedDestinationBuffer.IsEmpty())
+		return;
+	
+	const auto Destination = CachedDestinationBuffer[0];
+
+	if ((character_->GetActorLocation() - Destination).Size() <= Player_Stats.ValidatePathPointThreshold)
+	{
+		CachedDestinationBuffer.RemoveAt(0);
+		CachedDestinationBuffer.Add(Destination);
+	}
+	
+	CachedDestination = Destination;
+
+	MoveSeek();
+
+	DrawSphere(Destination, Player_Stats.ValidatePathPointThreshold, FColor::Orange);
+}
+
+void Asteering_player_controller::PathOneWay()
+{
+	if (CachedDestinationBuffer.IsEmpty())
+		return;
+	
+	const auto Destination = CachedDestinationBuffer[0];
+
+	if ((character_->GetActorLocation() - Destination).Size() <= Player_Stats.ValidatePathPointThreshold)
+		CachedDestinationBuffer.RemoveAt(0);
+
+	CachedDestination = Destination;
+
+	if (CachedDestinationBuffer.Num() < 1)
+	{
+		MoveArrival();
+	}
+	else
+	{
+		MoveSeek();
+	}
+
+	DrawSphere(Destination, Player_Stats.ValidatePathPointThreshold, FColor::Orange);
+}
+
+void Asteering_player_controller::PathTwoWay()
+{
+	if (CachedDestinationBuffer.IsEmpty())
+    	return;
+	
+	const auto Destination = CachedDestinationBuffer[0];
+
+	if ((character_->GetActorLocation() - Destination).Size() <= Player_Stats.ValidatePathPointThreshold)
+	{
+		CachedDestinationBuffer.RemoveAt(0);
+		CachedDestinationBuffer.Add(Destination);
+	}
+	
+	CachedDestination = Destination;
+
+	MoveSeek();
+
+	DrawSphere(Destination, Player_Stats.ValidatePathPointThreshold, FColor::Orange);
+}
+
+void Asteering_player_controller::ResetCachedDestinationBuffer()
+{
+	CachedDestinationBuffer.Empty();
+	CachedDestinationBuffer.Add(FVector::ZeroVector);
 }
 
 void Asteering_player_controller::DrawSphere(const FVector& Center, const float Radius, const FColor Color) const

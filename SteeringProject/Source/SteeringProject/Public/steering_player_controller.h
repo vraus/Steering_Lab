@@ -42,6 +42,9 @@ public:
 	void OnInputStarted();
 
 	UFUNCTION(BlueprintCallable, Category = "Steering")
+	void OnGoPath();
+
+	UFUNCTION(BlueprintCallable, Category = "Steering")
 	void UpdatePlayerInfos(FMovableActorInfos NewPlayerInfos) { Player_Stats = NewPlayerInfos; }
 
 	/** MappingContext */
@@ -69,7 +72,7 @@ protected:
 	EBehaviours Behaviour;
 
 	UFUNCTION(BlueprintCallable, Category = "Steering")
-	void SetCachedLocation(const FVector& NewLocation) { CachedDestination = NewLocation; }
+	void SetCachedLocation(const FVector& NewLocation);
 
 private:
 	void MoveSeek() const;
@@ -77,6 +80,11 @@ private:
 	void MovePursuit() const;
 	void MoveEvade();
 	void MoveArrival();
+	void PathCircuit();
+	void PathOneWay();
+	void PathTwoWay();
+
+	void ResetCachedDestinationBuffer();
 
 	ATargetCharacter *TargetCharacter;
 	Asteering_character *character_;
@@ -85,9 +93,11 @@ private:
 
 	FVector Velocity;
 	FVector CachedDestination;
+	TArray<FVector> CachedDestinationBuffer;
 	FVector TargetCharacter_Location;
 	FVector TargetCharacter_Velocity;
 
+	bool bPathMode;
 	bool bShouldMove;
 	float FollowTime;
 	float LastEvadeTime;
