@@ -129,6 +129,16 @@ void Asteering_player_controller::OnInputStarted()
 void Asteering_player_controller::OnGoPath()
 {
 	CachedDestinationBuffer[0] = character_->GetActorLocation();
+
+	if (int i = CachedDestinationBuffer.Num(); Behaviour == EBehaviours::TwoWay && i > 1)
+	{
+		for (i = i - 2; i > 0; --i)
+		{
+			auto Tmp = CachedDestinationBuffer[i];
+			CachedDestinationBuffer.Add(Tmp);	
+		}
+	}
+	
 	bPathMode = true;
 	bShouldMove = true;
 }
@@ -177,7 +187,7 @@ void Asteering_player_controller::SetCachedLocation(const FVector& NewLocation)
 		CachedDestination = NewLocation;
 		return;
 	}
-
+	
 	CachedDestinationBuffer.Add(NewLocation);
 }
 
@@ -321,6 +331,8 @@ void Asteering_player_controller::PathCircuit()
 {
 	if (CachedDestinationBuffer.IsEmpty())
 		return;
+
+	DrawPath();
 	
 	const auto Destination = CachedDestinationBuffer[0];
 
@@ -341,6 +353,8 @@ void Asteering_player_controller::PathOneWay()
 {
 	if (CachedDestinationBuffer.IsEmpty())
 		return;
+	
+	DrawPath();
 	
 	const auto Destination = CachedDestinationBuffer[0];
 
@@ -364,7 +378,9 @@ void Asteering_player_controller::PathOneWay()
 void Asteering_player_controller::PathTwoWay()
 {
 	if (CachedDestinationBuffer.IsEmpty())
-    	return;
+		return;
+
+	DrawPath();
 	
 	const auto Destination = CachedDestinationBuffer[0];
 
@@ -385,6 +401,12 @@ void Asteering_player_controller::ResetCachedDestinationBuffer()
 {
 	CachedDestinationBuffer.Empty();
 	CachedDestinationBuffer.Add(FVector::ZeroVector);
+}
+
+void Asteering_player_controller::DrawPath() const
+{
+	for (int i = 0; i < CachedDestinationBuffer.Num(); i++)
+		DrawSphere(CachedDestinationBuffer[i], 15, (i <= 1) ? FColor::Red : FColor::Emerald);
 }
 
 void Asteering_player_controller::DrawSphere(const FVector& Center, const float Radius, const FColor Color) const

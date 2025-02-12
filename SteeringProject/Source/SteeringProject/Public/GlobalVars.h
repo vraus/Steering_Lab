@@ -41,7 +41,19 @@ struct FMovableActorInfos
 {
 	GENERATED_USTRUCT_BODY()
 
-
+	FMovableActorInfos()
+		: Mass(1.f)
+		, MaxSpeed(600.f)
+		, MaxForce(500.f)
+		, RotationSpeed(5.0f)
+		, SlowingDistance(300.0f)
+		, StoppingDistance(50.0f)
+		, FleeThreshold(200.0f)
+		, PursuitPrediction(1.0f)
+		, EvadeCooldown(2.0f)
+		, ValidatePathPointThreshold(10.0f)
+	{}
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Mass;
 

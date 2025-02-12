@@ -102,7 +102,8 @@ private:
 	float FollowTime;
 	float LastEvadeTime;
 
-	/** Draw Debug Functions */
+	/** Draw Debug Functions */	
+	void DrawPath() const;
 	void DrawSphere(const FVector& Center, const float Radius, const FColor Color) const;
 	void DrawLine(const FVector& LineStart, const FVector& LineEnd, const FColor Color) const;
 };
