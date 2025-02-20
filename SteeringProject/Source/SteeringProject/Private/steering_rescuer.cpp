@@ -4,6 +4,8 @@
 #include "steering_rescuer.h"
 
 #include "MaterialHLSLTree.h"
+#include "NavigationPath.h"
+#include "NavigationSystem.h"
 
 
 // Sets default values
@@ -29,9 +31,9 @@ void Asteering_rescuer::MoveTo()
 	PathOneWay();
 }
 
-void Asteering_rescuer::SetCachedDestination(const FVector& NewDestination)
+void Asteering_rescuer::SetTarget(const FVector& NewTarget)
 {
-	CachedDestinationBuffer.Add(NewDestination);
+	Target = NewTarget;
 }
 
 // Called every frame

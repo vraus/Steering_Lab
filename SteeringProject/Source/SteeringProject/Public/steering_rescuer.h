@@ -23,7 +23,7 @@ protected:
 	void MoveTo();
 
 	UFUNCTION(BlueprintCallable, Category = "Rescuer")
-	void SetCachedDestination(const FVector& NewDestination);
+	void SetTarget(const FVector& NewTarget);
 
 public:
 	// Called every frame
@@ -39,6 +39,7 @@ private:
 
 	FVector Velocity;
 
+	FVector Target;
 	FVector CachedDestination;
 	TArray<FVector> CachedDestinationBuffer;
 
