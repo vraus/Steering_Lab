@@ -35,17 +35,17 @@ L’objectif de ce lab est d’implémenter une "**steering library**" permettan
 
 #### 1️⃣ Comportements de base
 
-- **Seek** 🏃‍♂️➡️ : Se dirige vers une cible fixe.
-- **Flee** 🏃‍♂️⬅️ : Fuit une cible fixe.
-- **Pursuit** 🎯 : Intercepte une cible en mouvement en prédisant sa position future.
-- **Evade** 🚫 : Fuit un poursuivant en prédisant sa trajectoire.
-- **Arrival** 🏁 : Se dirige vers une cible puis ralentit progressivement avant d’arriver.
+- **✅ Seek** 🏃‍♂️➡️ : Se dirige vers une cible fixe.
+- **✅ Flee** 🏃‍♂️⬅️ : Fuit une cible fixe.
+- **✅ Pursuit** 🎯 : Intercepte une cible en mouvement en prédisant sa position future.
+- **✅ Evade** 🚫 : Fuit un poursuivant en prédisant sa trajectoire.
+- **✅ Arrival** 🏁 : Se dirige vers une cible puis ralentit progressivement avant d’arriver.
 
 #### 2️⃣ Comportements combinés
 
-- **Circuit** 🔄 : Suit un chemin en boucle infinie.
-- **One Way** ➡️ : Suit un chemin jusqu’à un point donné, puis s’arrête.
-- **Two Ways** ⬅️➡️ : Suit un chemin jusqu’à un point donné, puis fait demi-tour et revient.
+- **✅ Circuit** 🔄 : Suit un chemin en boucle infinie.
+- **✅ One Way** ➡️ : Suit un chemin jusqu’à un point donné, puis s’arrête.
+- **✅ Two Ways** ⬅️➡️ : Suit un chemin jusqu’à un point donné, puis fait demi-tour et revient.
 
 ## 🚑 Lab 2 : Rescuer Simulation
 
@@ -61,15 +61,15 @@ Ce lab simule une **opération de sauvetage** dans une ville où des **NPCs doiv
 
 #### 1️⃣ Planification et pathfinding
 
-- Un **planner** choisit la victime à sauver en priorité.
-- Un **pathfinding** algorithm (A\* ou Dijkstra) trouve le chemin optimal.
-- Le NPC **change d’objectif** si une victime est sauvée avant son arrivée.
+- **🚧 Un planner** choisit la victime à sauver en priorité.
+- **🚧 Un pathfinding** algorithm (A\* ou Dijkstra) trouve le chemin optimal.
+- **🚧 NPCchange d’objectif** si une victime est sauvée avant son arrivée.
 
 #### 2️⃣ Déplacement et évitement
 
-- **Mouvement** basé sur le **Steering Lab** (Seek, Arrival, etc.).
-- **Évitement** de collisions avec d’autres NPCs et victimes.
-- **Navigation fluide** dans un environnement urbain simulé.
+- **✅ Mouvement** basé sur le **Steering Lab** (Seek, Arrival, etc.).
+- **🚧 Évitement** de collisions avec d’autres NPCs et victimes.
+- **🚧 Navigation fluide** dans un environnement urbain simulé.
 
 ## 💾 Installation
 
