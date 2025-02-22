@@ -8,16 +8,16 @@
 // Core
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "steering_character.generated.h"
+#include "SteeringCharacter.generated.h"
 
 UCLASS()
-class STEERINGPROJECT_API Asteering_character : public ACharacter
+class STEERINGPROJECT_API ASteeringCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this character's properties
-	Asteering_character();
+	ASteeringCharacter();
 
 protected:
 	// Called when the game starts or when spawned

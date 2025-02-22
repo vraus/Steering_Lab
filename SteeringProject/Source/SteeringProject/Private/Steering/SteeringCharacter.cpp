@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "steering_character.h"
+#include "Steering/SteeringCharacter.h"
 
 // Sets default values
-Asteering_character::Asteering_character()
+ASteeringCharacter::ASteeringCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -24,21 +24,21 @@ Asteering_character::Asteering_character()
 }
 
 // Called when the game starts or when spawned
-void Asteering_character::BeginPlay()
+void ASteeringCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void Asteering_character::Tick(float DeltaTime)
+void ASteeringCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
 // Called to bind functionality to input
-void Asteering_character::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ASteeringCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 

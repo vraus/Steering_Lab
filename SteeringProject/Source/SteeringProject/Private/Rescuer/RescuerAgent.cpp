@@ -1,31 +1,31 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TargetCharacter.h"
+#include "Rescuer/RescuerAgent.h"
 
 
 // Sets default values
-ATargetCharacter::ATargetCharacter()
+ARescuerAgent::ARescuerAgent()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
 // Called when the game starts or when spawned
-void ATargetCharacter::BeginPlay()
+void ARescuerAgent::BeginPlay()
 {
 	Super::BeginPlay();
 	
 }
 
 // Called every frame
-void ATargetCharacter::Tick(float DeltaTime)
+void ARescuerAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
 // Called to bind functionality to input
-void ATargetCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+void ARescuerAgent::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
