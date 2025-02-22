@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Steering/SteeringPlayerController.h"
+#include "steering_player_controller.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/Pawn.h"
-#include "Steering/SteeringCharacter.h"
+#include "steering_character.h"
 #include "Engine/World.h"
 #include "EnhancedInputComponent.h"
 #include "InputActionValue.h"
 #include "EnhancedInputSubsystems.h"
 #include "Engine/LocalPlayer.h"
 
-ASteeringPlayerController::ASteeringPlayerController(): ShortPressThreshold(0), DefaultMappingContext(nullptr),
+Asteering_player_controller::Asteering_player_controller(): ShortPressThreshold(0), DefaultMappingContext(nullptr),
                                                             SetDestinationClickAction(nullptr),
                                                             bMoveToMouseCursor(false)
 {
@@ -34,7 +34,7 @@ ASteeringPlayerController::ASteeringPlayerController(): ShortPressThreshold(0), 
 	TargetCharacter_Velocity = FVector::ZeroVector;
 }
 
-void ASteeringPlayerController::SetMovementBehaviour(const EBehaviours New_Behaviour)
+void Asteering_player_controller::SetMovementBehaviour(const EBehaviours New_Behaviour)
 {
 	Behaviour = New_Behaviour;
 
@@ -80,7 +80,7 @@ void ASteeringPlayerController::SetMovementBehaviour(const EBehaviours New_Behav
 	UE_LOG(LogTemp, Display, TEXT("New Behaviour received"));
 }
 
-void ASteeringPlayerController::SetCharacter(ASteeringCharacter* Player_Pawn)
+void Asteering_player_controller::SetCharacter(Asteering_character* Player_Pawn)
 {
 	if (Player_Pawn) {
 		character_ = Player_Pawn;
@@ -91,7 +91,7 @@ void ASteeringPlayerController::SetCharacter(ASteeringCharacter* Player_Pawn)
 	}
 }
 
-void ASteeringPlayerController::SetTargetCharacter(ATargetCharacter* Target_Character)
+void Asteering_player_controller::SetTargetCharacter(ATargetCharacter* Target_Character)
 {
 	if (Target_Character)
 	{
@@ -99,12 +99,12 @@ void ASteeringPlayerController::SetTargetCharacter(ATargetCharacter* Target_Char
 	}
 }
 
-void ASteeringPlayerController::BeginPlay()
+void Asteering_player_controller::BeginPlay()
 {
 	Super::BeginPlay();
 }
 
-void ASteeringPlayerController::Tick(float DeltaSeconds)
+void Asteering_player_controller::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
@@ -118,7 +118,7 @@ void ASteeringPlayerController::Tick(float DeltaSeconds)
 	MoveTo();
 }
 
-void ASteeringPlayerController::OnInputStarted()
+void Asteering_player_controller::OnInputStarted()
 {
 	StopMovement();
 
@@ -126,7 +126,7 @@ void ASteeringPlayerController::OnInputStarted()
 		bShouldMove = true;
 }
 
-void ASteeringPlayerController::OnGoPath()
+void Asteering_player_controller::OnGoPath()
 {
 	CachedDestinationBuffer[0] = character_->GetActorLocation();
 
@@ -143,7 +143,7 @@ void ASteeringPlayerController::OnGoPath()
 	bShouldMove = true;
 }
 
-void ASteeringPlayerController::MoveTo()
+void Asteering_player_controller::MoveTo()
 {
 	switch (Behaviour)
 	{
@@ -180,7 +180,7 @@ void ASteeringPlayerController::MoveTo()
 	}
 }
 
-void ASteeringPlayerController::SetCachedLocation(const FVector& NewLocation)
+void Asteering_player_controller::SetCachedLocation(const FVector& NewLocation)
 {
 	if (!bPathMode)
 	{
@@ -191,7 +191,7 @@ void ASteeringPlayerController::SetCachedLocation(const FVector& NewLocation)
 	CachedDestinationBuffer.Add(NewLocation);
 }
 
-void ASteeringPlayerController::MoveSeek() const
+void Asteering_player_controller::MoveSeek() const
 {
 	const FVector DesiredVelocity = (CachedDestination - character_->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed;
 
@@ -212,7 +212,7 @@ void ASteeringPlayerController::MoveSeek() const
 	DrawSphere(CachedDestination, 15, FColor::Red);
 }
 
-void ASteeringPlayerController::MoveFlee() const
+void Asteering_player_controller::MoveFlee() const
 {
 	const FVector DesiredVelocity = (character_->GetActorLocation() - CachedDestination).GetSafeNormal() * Player_Stats.MaxSpeed;
 
@@ -233,7 +233,7 @@ void ASteeringPlayerController::MoveFlee() const
 	DrawSphere(CachedDestination, 15, FColor::Red);
 }
 
-void ASteeringPlayerController::MovePursuit() const
+void Asteering_player_controller::MovePursuit() const
 {
 	const FVector Target_FuturLocation = TargetCharacter_Location + TargetCharacter_Velocity * Player_Stats.PursuitPrediction;
 
@@ -255,7 +255,7 @@ void ASteeringPlayerController::MovePursuit() const
 	DrawSphere(Target_FuturLocation, 15, FColor::Red);
 }
 
-void ASteeringPlayerController::MoveEvade()
+void Asteering_player_controller::MoveEvade()
 {
     const FVector Target_FutureLocation = TargetCharacter_Location + TargetCharacter_Velocity * Player_Stats.PursuitPrediction;
 
@@ -293,7 +293,7 @@ void ASteeringPlayerController::MoveEvade()
 }
 
 
-void ASteeringPlayerController::MoveArrival()
+void Asteering_player_controller::MoveArrival()
 {
 	const FVector TargetOffset = CachedDestination - character_->GetActorLocation();
 	const float Distance = TargetOffset.Size();
@@ -327,7 +327,7 @@ void ASteeringPlayerController::MoveArrival()
 	DrawSphere(CachedDestination, Player_Stats.StoppingDistance, FColor::Red);
 }
 
-void ASteeringPlayerController::PathCircuit()
+void Asteering_player_controller::PathCircuit()
 {
 	if (CachedDestinationBuffer.IsEmpty())
 		return;
@@ -349,7 +349,7 @@ void ASteeringPlayerController::PathCircuit()
 	DrawSphere(Destination, Player_Stats.ValidatePathPointThreshold, FColor::Orange);
 }
 
-void ASteeringPlayerController::PathOneWay()
+void Asteering_player_controller::PathOneWay()
 {
 	if (CachedDestinationBuffer.IsEmpty())
 		return;
@@ -375,7 +375,7 @@ void ASteeringPlayerController::PathOneWay()
 	DrawSphere(Destination, Player_Stats.ValidatePathPointThreshold, FColor::Orange);
 }
 
-void ASteeringPlayerController::PathTwoWay()
+void Asteering_player_controller::PathTwoWay()
 {
 	if (CachedDestinationBuffer.IsEmpty())
 		return;
@@ -397,24 +397,24 @@ void ASteeringPlayerController::PathTwoWay()
 	DrawSphere(Destination, Player_Stats.ValidatePathPointThreshold, FColor::Orange);
 }
 
-void ASteeringPlayerController::ResetCachedDestinationBuffer()
+void Asteering_player_controller::ResetCachedDestinationBuffer()
 {
 	CachedDestinationBuffer.Empty();
 	CachedDestinationBuffer.Add(FVector::ZeroVector);
 }
 
-void ASteeringPlayerController::DrawPath() const
+void Asteering_player_controller::DrawPath() const
 {
 	for (int i = 0; i < CachedDestinationBuffer.Num(); i++)
 		DrawSphere(CachedDestinationBuffer[i], 15, (i <= 1) ? FColor::Red : FColor::Emerald);
 }
 
-void ASteeringPlayerController::DrawSphere(const FVector& Center, const float Radius, const FColor Color) const
+void Asteering_player_controller::DrawSphere(const FVector& Center, const float Radius, const FColor Color) const
 {
 	DrawDebugSphere(GetWorld(), Center, Radius, 12, Color, false, 0.f);
 }
 
-void ASteeringPlayerController::DrawLine(const FVector& LineStart, const FVector& LineEnd, const FColor Color) const
+void Asteering_player_controller::DrawLine(const FVector& LineStart, const FVector& LineEnd, const FColor Color) const
 {
 	DrawDebugLine(GetWorld(), LineStart, LineEnd, Color, false, 0.f, 0, 2.f);
 }

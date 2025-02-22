@@ -4,32 +4,32 @@
 
 // Project
 #include "GlobalVars.h"
-#include "SteeringCharacter.h"
-#include "Target/TargetActor.h"
+#include "steering_character.h"
+#include "TargetActor.h"
 
 // Core
 #include "CoreMinimal.h"
-#include "Target/TargetCharacter.h"
+#include "TargetCharacter.h"
 #include "Templates/SubclassOf.h"
 #include "GameFramework/PlayerController.h"
-#include "SteeringPlayerController.generated.h"
+#include "steering_player_controller.generated.h"
 
 class UInputMappingContext;
 class UInputAction;
 
 UCLASS()
-class STEERINGPROJECT_API ASteeringPlayerController : public APlayerController
+class STEERINGPROJECT_API Asteering_player_controller : public APlayerController
 {
 	GENERATED_BODY()
 
 public:
-	ASteeringPlayerController();
+	Asteering_player_controller();
 
 	UFUNCTION(BlueprintCallable, Category = "Steering")
 	void SetMovementBehaviour(EBehaviours New_Behaviour);
 
 	UFUNCTION(BlueprintCallable, Category = "Steering")
-	void SetCharacter(ASteeringCharacter* Player_Pawn);
+	void SetCharacter(Asteering_character* Player_Pawn);
 
 	UFUNCTION(BlueprintCallable, Category = "Steering")
 	void SetTargetCharacter(ATargetCharacter* Target_Character);
@@ -87,7 +87,7 @@ private:
 	void ResetCachedDestinationBuffer();
 
 	ATargetCharacter *TargetCharacter;
-	ASteeringCharacter *character_;
+	Asteering_character *character_;
 
 	FMovableActorInfos Player_Stats;
 
