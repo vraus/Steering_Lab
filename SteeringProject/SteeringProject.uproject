@@ -25,6 +25,10 @@
 		{
 			"Name": "Cargo",
 			"Enabled": false
+		},
+		{
+			"Name": "ChaosVehiclesPlugin",
+			"Enabled": true
 		}
 	]
 }
