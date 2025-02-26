@@ -19,20 +19,16 @@ public:
 	// Sets default values for this character's properties
 	Asteering_character();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	FMovableActorInfos GetActorInfos() const { return ActorInfos; }
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Steering")
 	FMovableActorInfos ActorInfos;
 
-public:	
-	// Called every frame
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	FMovableActorInfos GetActorInfos() const { return ActorInfos;  }
-private:
 };
