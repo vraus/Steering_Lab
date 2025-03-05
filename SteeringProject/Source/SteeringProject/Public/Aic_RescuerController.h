@@ -27,7 +27,7 @@ protected:
 
 private:
 	void MoveTo();
-	void MoveSeek();
+	void MoveSeek() const;
 
 	bool bShouldMove;
 

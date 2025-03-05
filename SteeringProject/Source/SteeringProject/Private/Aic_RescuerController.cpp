@@ -6,6 +6,10 @@
 AAic_RescuerController::AAic_RescuerController()
 {
 	bShouldMove = false;
+
+	Velocity = FVector::ZeroVector;
+	Agent = nullptr;
+	CachedDestination = FVector::ZeroVector;
 }
 
 void AAic_RescuerController::Tick(float DeltaTime)
@@ -44,7 +48,7 @@ void AAic_RescuerController::MoveTo()
 	DrawSphere(Destination, Agent->ActorInfos.ValidatePathPointThreshold, FColor::Orange);
 }
 
-void AAic_RescuerController::MoveSeek()
+void AAic_RescuerController::MoveSeek() const
 {
 	const FVector DesiredVelocity = (CachedDestination - Agent->GetActorLocation()).GetSafeNormal() * Agent->ActorInfos.MaxSpeed;
 
