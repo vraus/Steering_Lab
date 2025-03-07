@@ -13,6 +13,13 @@ ANavigationPoint::ANavigationPoint()
 	Root = CreateDefaultSubobject<USceneComponent>("Root");
 
 	ConnectionRadius = 800.f;
+
+	NavNode = {
+		.Parent = nullptr,
+		.GCost = -1,
+		.HCost = -1,
+		.FCost = -1,
+	};
 }
 
 void ANavigationPoint::BeginPlay()
@@ -32,7 +39,6 @@ void ANavigationPoint::Tick(float DeltaTime)
 void ANavigationPoint::FindNearbyNavPoints()
 {
 	TArray<AActor*> FoundActors;
-	// UGameplayStatics::GetAllActorsOfClass(GetWorld(), TSubclassOf<ANavigationPoint>(), FoundActors);
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ANavigationPoint::StaticClass(), FoundActors);
 
 	for (const auto Actor : FoundActors)

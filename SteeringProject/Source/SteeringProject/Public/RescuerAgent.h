@@ -3,26 +3,42 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "NavigationPoint.h"
+#include "TargetCharacter.h"
 #include "GameFramework/Character.h"
 #include "RescuerAgent.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom))
 class STEERINGPROJECT_API ARescuerAgent : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	ARescuerAgent();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UFUNCTION(BlueprintCallable, Category = "Navigation")
+	ANavigationPoint* FindClosestNavPoint(const AActor* Target) const;
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Navigation|Initialisation")
+	ATargetCharacter* TargetCharacter;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Navigation|Initialisation")
+	ANavigationPoint* StartPoint;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Navigation|Initialisation")
+	ANavigationPoint* EndPoint;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Navigation|Initialisation")
+	bool bIsFindingPath;
+
+private:
+
+	// Debug Function
+	void DrawDebugPath(const AActor* StartingPoint, const AActor* EndingPoint) const;
 };

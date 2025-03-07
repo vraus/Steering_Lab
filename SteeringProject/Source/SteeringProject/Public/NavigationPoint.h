@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Structs/SNavNode.h"
 #include "NavigationPoint.generated.h"
 
 UCLASS(Blueprintable, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -31,6 +32,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Components")
 	USceneComponent* Root;
 
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Navigation Node")
+	FSNavNode NavNode;
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Navigation")
 	TArray<ANavigationPoint*> ConnectedPoints;

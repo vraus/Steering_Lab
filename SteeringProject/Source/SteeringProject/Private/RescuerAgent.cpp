@@ -3,30 +3,67 @@
 
 #include "RescuerAgent.h"
 
+#include "Kismet/GameplayStatics.h"
 
-// Sets default values
+
 ARescuerAgent::ARescuerAgent()
 {
-	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	TargetCharacter = nullptr;
+	StartPoint = nullptr;
+	EndPoint = nullptr;
+	bIsFindingPath = false;
 }
 
-// Called when the game starts or when spawned
 void ARescuerAgent::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	StartPoint = FindClosestNavPoint(this);
+
+	TargetCharacter = static_cast<ATargetCharacter*>(UGameplayStatics::GetActorOfClass(GetWorld(), ATargetCharacter::StaticClass()));
+
+	if (TargetCharacter)
+	{
+		EndPoint = FindClosestNavPoint(TargetCharacter);
+		// Start Path finding
+	} else
+	{
+		UE_LOG(LogTemp, Error, TEXT("No target Found"));
+	}
 }
 
-// Called every frame
 void ARescuerAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	DrawDebugPath(StartPoint, EndPoint);
+
+	if (!bIsFindingPath)
+		return;
 }
 
-// Called to bind functionality to input
-void ARescuerAgent::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+ANavigationPoint* ARescuerAgent::FindClosestNavPoint(const AActor* Target) const
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	TArray<AActor*> FoundNavPoints;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ANavigationPoint::StaticClass(), FoundNavPoints);
+
+	ANavigationPoint* ClosestNavPoint = static_cast<ANavigationPoint*>(FoundNavPoints[0]);
+
+	for (const auto NavPoint : FoundNavPoints)
+	{
+		if (ClosestNavPoint == NavPoint)
+			continue;
+
+		if (Target->GetDistanceTo(NavPoint) < Target->GetDistanceTo(ClosestNavPoint))
+			ClosestNavPoint = static_cast<ANavigationPoint*>(NavPoint);
+	}
+	
+	return ClosestNavPoint;
 }
 
+void ARescuerAgent::DrawDebugPath(const AActor* StartingPoint, const AActor* EndingPoint) const
+{
+	DrawDebugLine(GetWorld(), StartingPoint->GetActorLocation(), EndingPoint->GetActorLocation(), FColor::Green);
+}

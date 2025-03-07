@@ -5,7 +5,6 @@
 // Project
 #include "GlobalVars.h"
 #include "steering_character.h"
-#include "TargetActor.h"
 
 // Core
 #include "CoreMinimal.h"
