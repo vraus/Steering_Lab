@@ -18,7 +18,6 @@ ANavigationPoint::ANavigationPoint()
 		.Parent = nullptr,
 		.GCost = -1,
 		.HCost = -1,
-		.FCost = -1,
 	};
 }
 

@@ -21,7 +21,4 @@ struct FSNavNode
 
 	UPROPERTY(BlueprintReadWrite, Category = "Navigation Node")
 	float HCost;
-
-	UPROPERTY(BlueprintReadWrite, Category = "Navigation Node")
-	float FCost;
 };

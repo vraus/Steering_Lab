@@ -18,6 +18,12 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = "Navigation|Costs")
+	float FCost() const { return NavNode.GCost + NavNode.HCost; }
+
+	UFUNCTION(BlueprintCallable, Category = "Navigation|Navigation Node")
+	TArray<ANavigationPoint*> GetNeighbors() const { return ConnectedPoints; }
+	
 protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Navigation")
