@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GlobalVars.h"
 #include "NavigationPoint.h"
 #include "TargetCharacter.h"
 #include "GameFramework/Character.h"
@@ -39,10 +40,18 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
 	void MoveAlongPath();
 
+	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
+	void PathOneWay();
+
+	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
+	void MoveArrival();
+
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Costs")
 	ANavigationPoint* GetLowestFCost() const;
 
 protected:
+	/** Initialisation */
+	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Initialisation")
 	ATargetCharacter* TargetCharacter;
 	
@@ -54,14 +63,18 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Initialisation")
 	bool bIsFindingPath;
-
+	
+	/** Queues */
+	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Queues")
 	TArray<ANavigationPoint*> OpenQueue;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Queues")
 	TArray<ANavigationPoint*> ClosedQueue;
 
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
+	/** Path */
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Navigation|Path")
 	TArray<ANavigationPoint*> Path;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
@@ -73,9 +86,21 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
 	bool bCanMove;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
+	FVector CachedLocation;
+
+	/** Movements */
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Movement")
+	FVector Velocity;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Navigation|Movement")
+	FMovableActorInfos Player_Stats;
+
 private:
 	void ClearQueues();
 
 	// Debug Function
-	void DrawDebugPath(const AActor* StartingPoint, const AActor* EndingPoint) const;
+	void DrawDebugPath() const;
+	void DrawLine(const AActor* StartingPoint, const AActor* EndingPoint, FColor Color) const;
+	void DrawSphere(const FVector& Center, const float Radius, const FColor Color) const;
 };

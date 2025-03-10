@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Object.h"
 #include "SNavNode.generated.h"
 
 class ANavigationPoint;

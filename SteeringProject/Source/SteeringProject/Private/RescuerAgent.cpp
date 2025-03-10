@@ -4,6 +4,7 @@
 #include "RescuerAgent.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "WorldPartition/ContentBundle/ContentBundleLog.h"
 
 
 ARescuerAgent::ARescuerAgent()
@@ -17,6 +18,20 @@ ARescuerAgent::ARescuerAgent()
 	bIsFindingPath = false;
 	bIsBuildingPath = false;
 	bCanMove = false;
+
+	Velocity = FVector::ZeroVector;
+	CachedLocation = FVector::ZeroVector;
+	
+	Player_Stats.Mass = 1.f;
+	Player_Stats.MaxSpeed = 600.f;
+	Player_Stats.MaxForce = 600.f;
+	Player_Stats.RotationSpeed = 6.f;
+	Player_Stats.SlowingDistance = 600.f;
+	Player_Stats.StoppingDistance = 50.f;
+	Player_Stats.FleeThreshold = 90.f;
+	Player_Stats.EvadeCooldown = .25f;
+	Player_Stats.EvadeCooldown = 2.f;
+	Player_Stats.ValidatePathPointThreshold = 150.f;	
 }
 
 void ARescuerAgent::BeginPlay()
@@ -41,7 +56,7 @@ void ARescuerAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	DrawDebugPath(StartPoint, EndPoint);
+	DrawLine(StartPoint, EndPoint, FColor::Blue);
 
 	// We only start to find path once we're all set up
 	if (bIsFindingPath)
@@ -58,7 +73,7 @@ void ARescuerAgent::Tick(float DeltaTime)
 		ReconstructPath();
 
 	// The character knows the best route and can now move along the path to the destination
-	if (bIsFindingPath)
+	if (bCanMove)
 		MoveAlongPath();
 
 }
@@ -96,14 +111,6 @@ void ARescuerAgent::StartPathFinding()
 void ARescuerAgent::FindPath()
 {
 	ANavigationPoint* Current = GetLowestFCost();
-
-	if (Current == EndPoint)
-	{
-		bIsFindingPath = false;
-		StartPathReconstruction();
-		return;
-	}
-
 	OpenQueue.Remove(Current);
 	ClosedQueue.Add(Current);
 
@@ -113,8 +120,16 @@ void ARescuerAgent::FindPath()
 		// Ignore already explored neighbors
 		if (ClosedQueue.Contains(Neighbor))
 			continue;
+		
+		if (Neighbor == EndPoint)
+		{
+			bIsFindingPath = false;
+			EndPoint->NavNode.Parent = Current;
+			StartPathReconstruction();
+			return;
+		}
 
-		if (const float NewGCost = Current->NavNode.GCost + Current->GetDistanceTo(Neighbor); !OpenQueue.Contains(Neighbor) || NewGCost < Neighbor->NavNode.GCost)
+		if (const float NewGCost = Current->NavNode.GCost + Current->GetDistanceTo(Neighbor); !OpenQueue.Contains(Neighbor) || NewGCost < Neighbor->NavNode.GCost || Neighbor->NavNode.GCost == -1)
 		{
 			Neighbor->NavNode.Parent = Current;
 			Neighbor->NavNode.GCost = NewGCost;
@@ -136,22 +151,71 @@ void ARescuerAgent::StartPathReconstruction()
 
 void ARescuerAgent::ReconstructPath()
 {
-	if (EndPoint->NavNode.Parent == nullptr)
-		UE_LOG(LogTemp, Error, TEXT("No path found: EndPoint->NavNode.Parent should not be nullptr"));
-
-	if (CurrentPathNode == StartPoint)
+	if (CurrentPathNode == nullptr)
 	{
 		bIsBuildingPath = false;
+		bCanMove = true;
 		return;
 	}
 
 	Path.Add(CurrentPathNode);
-	CurrentPathNode = CurrentPathNode->NavNode.Parent;		
+	CurrentPathNode = CurrentPathNode->NavNode.Parent;
 }
 
 void ARescuerAgent::MoveAlongPath()
 {
-	return;
+	DrawDebugPath();
+	PathOneWay();
+}
+
+void ARescuerAgent::PathOneWay()
+{
+	if (Path.IsEmpty())
+	{
+		bCanMove = false;	
+		return;
+	}
+
+	const auto Destination = Path.Last()->GetActorLocation();
+
+	if ((this->GetActorLocation() - Destination).Size() <= Player_Stats.ValidatePathPointThreshold)
+		Path.RemoveAt(Path.Num() - 1);
+
+	CachedLocation = Destination;
+
+	MoveArrival();
+}
+
+void ARescuerAgent::MoveArrival()
+{
+	const FVector TargetOffset = CachedLocation - this->GetActorLocation();
+	const float Distance = TargetOffset.Size();
+
+	if (Distance <= Player_Stats.StoppingDistance)
+	{
+		Velocity = FVector::ZeroVector;
+		return;
+	}
+
+	const float RampedSpeed = Player_Stats.MaxSpeed * (Distance / Player_Stats.SlowingDistance);
+	const float ClippedSpeed = FMath::Min(RampedSpeed, Player_Stats.MaxSpeed);
+
+	const FVector DesiredVelocity = TargetOffset.GetSafeNormal() * ClippedSpeed;
+
+	const FVector Steering = DesiredVelocity - this->GetVelocity();
+
+	FRotator TargetRotation = DesiredVelocity.Rotation();
+	TargetRotation.Roll = 0.f;
+	TargetRotation.Pitch = 0.f;
+
+	const FRotator CurrentRotation = this->GetActorRotation();
+	const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+
+	this->SetActorRotation(SmoothedRotation);
+
+	this->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
+	
+	DrawSphere(CachedLocation, Player_Stats.StoppingDistance, FColor::Orange);
 }
 
 ANavigationPoint* ARescuerAgent::GetLowestFCost() const
@@ -174,7 +238,20 @@ void ARescuerAgent::ClearQueues()
 	Path.Empty();
 }
 
-void ARescuerAgent::DrawDebugPath(const AActor* StartingPoint, const AActor* EndingPoint) const
+void ARescuerAgent::DrawDebugPath() const
 {
-	DrawDebugLine(GetWorld(), StartingPoint->GetActorLocation(), EndingPoint->GetActorLocation(), FColor::Green);
+	for (int i = 0; i < Path.Num()-1; ++i)
+	{
+		DrawLine(Path[i], Path[i+1], FColor::Green);
+	}
+}
+
+void ARescuerAgent::DrawLine(const AActor* StartingPoint, const AActor* EndingPoint, const FColor Color) const
+{
+	DrawDebugLine(GetWorld(), StartingPoint->GetActorLocation(), EndingPoint->GetActorLocation(), Color);
+}
+
+void ARescuerAgent::DrawSphere(const FVector& Center, const float Radius, const FColor Color) const
+{
+	DrawDebugSphere(GetWorld(), Center, Radius, 12, Color, false, 0.f);
 }
