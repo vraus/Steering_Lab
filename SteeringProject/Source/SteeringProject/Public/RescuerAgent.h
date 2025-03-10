@@ -92,8 +92,9 @@ protected:
 	/** Movements */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Movement")
 	FVector Velocity;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Navigation|Movement")
+	
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Infos")
 	FMovableActorInfos Player_Stats;
 
 private:
