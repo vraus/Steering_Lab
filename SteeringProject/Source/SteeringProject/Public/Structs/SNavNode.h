@@ -20,4 +20,6 @@ struct FSNavNode
 
 	UPROPERTY(BlueprintReadWrite, Category = "Navigation Node")
 	float HCost;
+
+	float FCost() const { return GCost + HCost; }
 };

@@ -18,9 +18,6 @@ public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	UFUNCTION(BlueprintCallable, Category = "Navigation|Costs")
-	float FCost() const { return NavNode.GCost + NavNode.HCost; }
-
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Navigation Node")
 	TArray<ANavigationPoint*> GetNeighbors() const { return ConnectedPoints; }
 	
@@ -40,9 +37,6 @@ private:
 public:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Components")
 	USceneComponent* Root;
-
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "Navigation Node")
-	FSNavNode NavNode;
 	
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "Navigation")

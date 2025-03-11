@@ -5,11 +5,10 @@
 #include "CoreMinimal.h"
 #include "GlobalVars.h"
 #include "NavigationPoint.h"
-#include "TargetCharacter.h"
 #include "GameFramework/Character.h"
 #include "RescuerAgent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetReached, ARescuerAgent*, Instigator);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnTargetReached, ARescuerAgent*, Instigator, bool, bTargetWasCharacter);
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom))
 class STEERINGPROJECT_API ARescuerAgent : public ACharacter
@@ -20,7 +19,7 @@ public:
 	ARescuerAgent();
 
 	UFUNCTION(BlueprintCallable, Category= "Navigation|Initialisation")
-	void InitTarget(ATargetCharacter* Target);
+	void InitTarget(AActor* Target, const bool bIsCharacter);
 
 	UFUNCTION(BlueprintCallable, Category= "Navigation|Initialisation")
 	void Ready();
@@ -62,7 +61,7 @@ protected:
 	/** Initialisation */
 	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Initialisation")
-	ATargetCharacter* TargetCharacter;
+	AActor* TargetCharacter;
 	
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Initialisation")
 	ANavigationPoint* StartPoint;
@@ -81,6 +80,10 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Queues")
 	TArray<ANavigationPoint*> ClosedQueue;
 
+	/** Data */
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Datas")
+	TMap<ANavigationPoint*, FSNavNode> NavData;
+	
 	/** Path */
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Navigation|Path")
@@ -94,6 +97,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
 	bool bCanMove;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
+	bool bTargetIsCharacter;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
 	FVector CachedLocation;
@@ -113,4 +119,6 @@ private:
 	void DrawDebugPath() const;
 	void DrawLine(const AActor* StartingPoint, const AActor* EndingPoint, FColor Color) const;
 	void DrawSphere(const FVector& Center, const float Radius, const FColor Color) const;
+	void DebugClosedQueue() const;
+	void DebugOpenQueue() const;
 };

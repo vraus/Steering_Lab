@@ -13,12 +13,6 @@ ANavigationPoint::ANavigationPoint()
 	Root = CreateDefaultSubobject<USceneComponent>("Root");
 
 	ConnectionRadius = 1200.f;
-
-	NavNode = {
-		.Parent = nullptr,
-		.GCost = -1,
-		.HCost = -1,
-	};
 }
 
 void ANavigationPoint::BeginPlay()
@@ -32,7 +26,7 @@ void ANavigationPoint::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	DrawConnections();
+	// DrawConnections();
 }
 
 void ANavigationPoint::FindNearbyNavPoints()

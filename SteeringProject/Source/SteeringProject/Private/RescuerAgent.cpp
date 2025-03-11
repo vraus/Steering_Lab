@@ -4,8 +4,6 @@
 #include "RescuerAgent.h"
 
 #include "Kismet/GameplayStatics.h"
-#include "WorldPartition/ContentBundle/ContentBundleLog.h"
-
 
 ARescuerAgent::ARescuerAgent()
 {
@@ -19,6 +17,7 @@ ARescuerAgent::ARescuerAgent()
 	bIsFindingPath = false;
 	bIsBuildingPath = false;
 	bCanMove = false;
+	bTargetIsCharacter = true;
 
 	Velocity = FVector::ZeroVector;
 	CachedLocation = FVector::ZeroVector;
@@ -35,8 +34,19 @@ ARescuerAgent::ARescuerAgent()
 	Player_Stats.ValidatePathPointThreshold = 150.f;	
 }
 
-void ARescuerAgent::InitTarget(ATargetCharacter* Target)
+void ARescuerAgent::InitTarget(AActor* Target, const bool bIsCharacter)
 {
+	ClearQueues();
+
+	bTargetIsCharacter = bIsCharacter;
+	
+	TargetCharacter = nullptr;
+	StartPoint = nullptr;
+	EndPoint = nullptr;
+	CurrentPathNode = nullptr;
+	Velocity = FVector::ZeroVector;
+	CachedLocation = FVector::ZeroVector;
+	
 	TargetCharacter = Target;
 
 	if (TargetCharacter == nullptr)
@@ -49,21 +59,31 @@ void ARescuerAgent::Ready()
 {
 	StartPoint = FindClosestNavPoint(this);
 
+	if (!StartPoint)
+		UE_LOG(LogTemp, Error, TEXT("StartPoint is null"));
+
 	if (TargetCharacter)
 	{
 		EndPoint = FindClosestNavPoint(TargetCharacter);
 		StartPathFinding();
 	}
+	else
+		UE_LOG(LogTemp, Error, TEXT("Target is null"));
 }
 
 void ARescuerAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-
+	
+	DebugClosedQueue();
+	DebugOpenQueue();
+	
+	if (bIsFindingPath | bIsBuildingPath | bCanMove)
+		DrawLine(StartPoint, EndPoint, FColor::Blue);
+	
 	// We only start to find path once we're all set up
 	if (bIsFindingPath)
-	{
+	{		
 		// When Open Queue is empty we either have a path or the target is not reachable.
 		if (OpenQueue.Num() <= 0)
 			return;
@@ -78,7 +98,6 @@ void ARescuerAgent::Tick(float DeltaTime)
 	// The character knows the best route and can now move along the path to the destination
 	if (bCanMove)
 		MoveAlongPath();
-
 }
 
 ANavigationPoint* ARescuerAgent::FindClosestNavPoint(const AActor* Target) const
@@ -104,11 +123,16 @@ void ARescuerAgent::StartPathFinding()
 {
 	ClearQueues();
 
-	StartPoint->NavNode.GCost = 0;
-	StartPoint->NavNode.HCost = StartPoint->GetDistanceTo(TargetCharacter);
+	FSNavNode& StartNode = NavData.FindOrAdd(StartPoint);
+	StartNode.GCost = 0;
+	StartNode.HCost = StartPoint->GetDistanceTo(TargetCharacter);
+	StartNode.Parent = nullptr;
+	
 	OpenQueue.Add(StartPoint);
 	
 	bIsFindingPath = true;
+	bIsBuildingPath = false;
+	bCanMove = false;
 }
 
 void ARescuerAgent::FindPath()
@@ -117,29 +141,35 @@ void ARescuerAgent::FindPath()
 	OpenQueue.Remove(Current);
 	ClosedQueue.Add(Current);
 
+	FSNavNode& CurrentNode = NavData.FindOrAdd(Current);
+
 	// Look at every neighbor of the current point.
 	for (auto Neighbor : Current->GetNeighbors())
 	{
 		// Ignore already explored neighbors
 		if (ClosedQueue.Contains(Neighbor))
 			continue;
+
+		FSNavNode& NeighborNode = NavData.FindOrAdd(Neighbor);
+		
+		const float NewGCost = CurrentNode.GCost + Current->GetDistanceTo(Neighbor);
 		
 		if (Neighbor == EndPoint)
 		{
 			bIsFindingPath = false;
-			EndPoint->NavNode.Parent = Current;
+			NeighborNode.Parent = Current;
 			StartPathReconstruction();
 			return;
 		}
-
-		if (const float NewGCost = Current->NavNode.GCost + Current->GetDistanceTo(Neighbor); !OpenQueue.Contains(Neighbor) || NewGCost < Neighbor->NavNode.GCost || Neighbor->NavNode.GCost == -1)
+		
+		if ( !OpenQueue.Contains(Neighbor) || NewGCost < NeighborNode.GCost || NeighborNode.GCost == -1)
 		{
-			Neighbor->NavNode.Parent = Current;
-			Neighbor->NavNode.GCost = NewGCost;
+			NeighborNode.Parent = Current;
+			NeighborNode.GCost = NewGCost;
 
 			if (!OpenQueue.Contains(Neighbor))
 			{
-				Neighbor->NavNode.HCost = Neighbor->GetDistanceTo(EndPoint);
+				NeighborNode.HCost = Neighbor->GetDistanceTo(EndPoint);
 				OpenQueue.Add(Neighbor);
 			}
 		}
@@ -154,15 +184,16 @@ void ARescuerAgent::StartPathReconstruction()
 
 void ARescuerAgent::ReconstructPath()
 {
-	if (CurrentPathNode == nullptr)
+	if (!CurrentPathNode)
 	{
+		UE_LOG(LogTemp, Error, TEXT("PATH FOUND !"));
 		bIsBuildingPath = false;
 		bCanMove = true;
 		return;
 	}
 
 	Path.Add(CurrentPathNode);
-	CurrentPathNode = CurrentPathNode->NavNode.Parent;
+	CurrentPathNode = NavData[CurrentPathNode].Parent;
 }
 
 void ARescuerAgent::MoveAlongPath()
@@ -175,8 +206,8 @@ void ARescuerAgent::PathOneWay()
 {
 	if (Path.IsEmpty())
 	{
-		OnTargetReached.Broadcast(this);
-		bCanMove = false;	
+		bCanMove = false;
+		OnTargetReached.Broadcast(this, bTargetIsCharacter);
 		return;
 	}
 
@@ -228,7 +259,7 @@ ANavigationPoint* ARescuerAgent::GetLowestFCost() const
 
 	for (const auto Node : OpenQueue)
 	{
-		if (Node->FCost() < LowestFCost->FCost())
+		if (NavData[Node].FCost() < NavData[LowestFCost].FCost())
 			LowestFCost = Node;
 	}
 
@@ -240,6 +271,7 @@ void ARescuerAgent::ClearQueues()
 	OpenQueue.Empty();
 	ClosedQueue.Empty();
 	Path.Empty();
+	NavData.Empty();
 }
 
 void ARescuerAgent::DrawDebugPath() const
@@ -258,4 +290,20 @@ void ARescuerAgent::DrawLine(const AActor* StartingPoint, const AActor* EndingPo
 void ARescuerAgent::DrawSphere(const FVector& Center, const float Radius, const FColor Color) const
 {
 	DrawDebugSphere(GetWorld(), Center, Radius, 12, Color, false, 0.f);
+}
+
+void ARescuerAgent::DebugClosedQueue() const
+{
+	for (const auto Node : ClosedQueue)
+	{
+		DrawSphere(Node->GetActorLocation(), 50, FColor::Purple);
+	}
+}
+
+void ARescuerAgent::DebugOpenQueue() const
+{
+	for (const auto Node : OpenQueue)
+	{
+		DrawSphere(Node->GetActorLocation(), 50, FColor::White);
+	}
 }
