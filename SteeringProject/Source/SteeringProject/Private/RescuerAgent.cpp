@@ -196,6 +196,30 @@ void ARescuerAgent::ReconstructPath()
 	CurrentPathNode = NavData[CurrentPathNode].Parent;
 }
 
+FVector ARescuerAgent::DetectAgentInFront() const
+{
+	FVector AvoidanceOffset = FVector::ZeroVector;
+
+	const FVector Start = GetActorLocation();
+	const FVector Forward = GetActorForwardVector();
+	const FVector End = Start + (Forward * 300.0f);
+
+	FHitResult Hit;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+
+	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Pawn, Params))
+	{
+		if (Hit.GetActor() && Hit.GetActor()->IsA(StaticClass()))
+		{
+			const FVector RightVector = GetActorRightVector();
+			AvoidanceOffset = RightVector * 300.0f;
+		}
+	}
+	
+	return AvoidanceOffset;
+}
+
 void ARescuerAgent::MoveAlongPath()
 {
 	DrawDebugPath();
@@ -235,7 +259,7 @@ void ARescuerAgent::MoveArrival()
 	const float RampedSpeed = Player_Stats.MaxSpeed * (Distance / Player_Stats.SlowingDistance);
 	const float ClippedSpeed = FMath::Min(RampedSpeed, Player_Stats.MaxSpeed);
 
-	const FVector DesiredVelocity = TargetOffset.GetSafeNormal() * ClippedSpeed;
+	const FVector DesiredVelocity = (TargetOffset.GetSafeNormal() * ClippedSpeed) + DetectAgentInFront();
 
 	const FVector Steering = DesiredVelocity - this->GetVelocity();
 

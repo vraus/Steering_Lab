@@ -46,6 +46,9 @@ protected:
 	void ReconstructPath();
 
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
+	FVector DetectAgentInFront() const;
+	
+	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
 	void MoveAlongPath();
 
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
