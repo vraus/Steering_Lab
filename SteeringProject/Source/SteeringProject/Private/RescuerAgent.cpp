@@ -175,6 +175,7 @@ void ARescuerAgent::PathOneWay()
 {
 	if (Path.IsEmpty())
 	{
+		OnTargetReached.Broadcast(this);
 		bCanMove = false;	
 		return;
 	}

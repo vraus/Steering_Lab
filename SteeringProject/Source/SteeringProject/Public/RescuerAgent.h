@@ -9,6 +9,8 @@
 #include "GameFramework/Character.h"
 #include "RescuerAgent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetReached, ARescuerAgent*, Instigator);
+
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom))
 class STEERINGPROJECT_API ARescuerAgent : public ACharacter
 {
@@ -22,6 +24,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category= "Navigation|Initialisation")
 	void Ready();
+
+	UPROPERTY(BlueprintAssignable, Category= "Navigation|Path")
+	FOnTargetReached OnTargetReached;
 	
 protected:
 	virtual void Tick(float DeltaTime) override;
