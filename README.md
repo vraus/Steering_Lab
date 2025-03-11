@@ -62,14 +62,14 @@ Ce lab simule une **opération de sauvetage** dans une ville où des **NPCs doiv
 #### 1️⃣ Planification et pathfinding
 
 - **🚧 Un planner** choisit la victime à sauver en priorité.
-- **🚧 Un pathfinding** algorithm (A\* ou Dijkstra) trouve le chemin optimal.
+- **✅ Un pathfinding** algorithm (A\* ou Dijkstra) trouve le chemin optimal.
 - **🚧 NPCchange d’objectif** si une victime est sauvée avant son arrivée.
 
 #### 2️⃣ Déplacement et évitement
 
 - **✅ Mouvement** basé sur le **Steering Lab** (Seek, Arrival, etc.).
 - **🚧 Évitement** de collisions avec d’autres NPCs et victimes.
-- **🚧 Navigation fluide** dans un environnement urbain simulé.
+- **✅ Navigation fluide**.
 
 ## 💾 Installation
 
