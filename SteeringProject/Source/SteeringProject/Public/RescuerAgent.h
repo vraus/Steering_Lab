@@ -17,9 +17,13 @@ class STEERINGPROJECT_API ARescuerAgent : public ACharacter
 public:
 	ARescuerAgent();
 
-protected:
-	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintCallable, Category= "Navigation|Initialisation")
+	void InitTarget(ATargetCharacter* Target);
 
+	UFUNCTION(BlueprintCallable, Category= "Navigation|Initialisation")
+	void Ready();
+	
+protected:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Initialisation")

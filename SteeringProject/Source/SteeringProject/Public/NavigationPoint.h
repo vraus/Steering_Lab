@@ -29,6 +29,9 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Navigation")
 	void FindNearbyNavPoints();
 
+	UFUNCTION(BlueprintCallable, Category = "Navigation")
+	bool CheckIfCanConnect(const AActor* PotentialNeighbor) const;
+	
 private:
 
 	UFUNCTION(BlueprintCallable, Category="Debug")

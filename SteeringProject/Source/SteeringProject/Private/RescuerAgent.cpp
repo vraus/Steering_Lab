@@ -15,6 +15,7 @@ ARescuerAgent::ARescuerAgent()
 	StartPoint = nullptr;
 	EndPoint = nullptr;
 	CurrentPathNode = nullptr;
+	
 	bIsFindingPath = false;
 	bIsBuildingPath = false;
 	bCanMove = false;
@@ -34,21 +35,24 @@ ARescuerAgent::ARescuerAgent()
 	Player_Stats.ValidatePathPointThreshold = 150.f;	
 }
 
-void ARescuerAgent::BeginPlay()
+void ARescuerAgent::InitTarget(ATargetCharacter* Target)
 {
-	Super::BeginPlay();
-	
-	StartPoint = FindClosestNavPoint(this);
+	TargetCharacter = Target;
 
-	TargetCharacter = static_cast<ATargetCharacter*>(UGameplayStatics::GetActorOfClass(GetWorld(), ATargetCharacter::StaticClass()));
+	if (TargetCharacter == nullptr)
+		UE_LOG(LogTemp, Error, TEXT("Target is null"));
+
+	Ready();
+}
+
+void ARescuerAgent::Ready()
+{
+	StartPoint = FindClosestNavPoint(this);
 
 	if (TargetCharacter)
 	{
 		EndPoint = FindClosestNavPoint(TargetCharacter);
 		StartPathFinding();
-	} else
-	{
-		UE_LOG(LogTemp, Error, TEXT("No target Found"));
 	}
 }
 
@@ -56,7 +60,6 @@ void ARescuerAgent::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	DrawLine(StartPoint, EndPoint, FColor::Blue);
 
 	// We only start to find path once we're all set up
 	if (bIsFindingPath)
