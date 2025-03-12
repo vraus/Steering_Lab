@@ -13,11 +13,9 @@ ARescuerAgent::ARescuerAgent()
 	StartPoint = nullptr;
 	EndPoint = nullptr;
 	CurrentPathNode = nullptr;
-	
-	bIsFindingPath = false;
-	bIsBuildingPath = false;
-	bCanMove = false;
+
 	bTargetIsCharacter = true;
+	State = ERescuerStates::Wander;
 
 	Velocity = FVector::ZeroVector;
 	CachedLocation = FVector::ZeroVector;
@@ -25,13 +23,13 @@ ARescuerAgent::ARescuerAgent()
 	Player_Stats.Mass = 1.f;
 	Player_Stats.MaxSpeed = 600.f;
 	Player_Stats.MaxForce = 600.f;
-	Player_Stats.RotationSpeed = 6.f;
+	Player_Stats.RotationSpeed = 15.f;
 	Player_Stats.SlowingDistance = 600.f;
-	Player_Stats.StoppingDistance = 50.f;
+	Player_Stats.StoppingDistance = 150.f;
 	Player_Stats.FleeThreshold = 90.f;
 	Player_Stats.EvadeCooldown = .25f;
 	Player_Stats.EvadeCooldown = 2.f;
-	Player_Stats.ValidatePathPointThreshold = 150.f;	
+	Player_Stats.ValidatePathPointThreshold = 200.f;	
 }
 
 void ARescuerAgent::InitTarget(AActor* Target, const bool bIsCharacter)
@@ -76,28 +74,22 @@ void ARescuerAgent::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	DebugClosedQueue();
-	DebugOpenQueue();
-	
-	if (bIsFindingPath | bIsBuildingPath | bCanMove)
-		DrawLine(StartPoint, EndPoint, FColor::Blue);
-	
-	// We only start to find path once we're all set up
-	if (bIsFindingPath)
-	{		
-		// When Open Queue is empty we either have a path or the target is not reachable.
-		if (OpenQueue.Num() <= 0)
-			return;
 
-		FindPath();
-	}
-
-	// Build the path
-	if (bIsBuildingPath)
+	switch (State) 
+	{
+	case ERescuerStates::Wander:
+		break;
+	case ERescuerStates::SearchPath:
+		if (OpenQueue.Num() > 0)
+			FindPath();
+		break;
+	case ERescuerStates::BuildPath:
 		ReconstructPath();
-
-	// The character knows the best route and can now move along the path to the destination
-	if (bCanMove)
+		break;
+	case ERescuerStates::Move:
 		MoveAlongPath();
+		break;
+	}
 }
 
 ANavigationPoint* ARescuerAgent::FindClosestNavPoint(const AActor* Target) const
@@ -130,9 +122,7 @@ void ARescuerAgent::StartPathFinding()
 	
 	OpenQueue.Add(StartPoint);
 	
-	bIsFindingPath = true;
-	bIsBuildingPath = false;
-	bCanMove = false;
+	State = ERescuerStates::SearchPath;
 }
 
 void ARescuerAgent::FindPath()
@@ -156,7 +146,6 @@ void ARescuerAgent::FindPath()
 		
 		if (Neighbor == EndPoint)
 		{
-			bIsFindingPath = false;
 			NeighborNode.Parent = Current;
 			StartPathReconstruction();
 			return;
@@ -179,7 +168,7 @@ void ARescuerAgent::FindPath()
 void ARescuerAgent::StartPathReconstruction()
 {
 	CurrentPathNode = EndPoint;
-	bIsBuildingPath = true;
+	State = ERescuerStates::BuildPath;
 }
 
 void ARescuerAgent::ReconstructPath()
@@ -187,8 +176,7 @@ void ARescuerAgent::ReconstructPath()
 	if (!CurrentPathNode)
 	{
 		UE_LOG(LogTemp, Error, TEXT("PATH FOUND !"));
-		bIsBuildingPath = false;
-		bCanMove = true;
+		State = ERescuerStates::Move;
 		return;
 	}
 
@@ -210,10 +198,10 @@ FVector ARescuerAgent::DetectAgentInFront() const
 
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Pawn, Params))
 	{
-		if (Hit.GetActor() && Hit.GetActor()->IsA(StaticClass()))
+		if (Hit.GetActor() && Hit.GetActor()->IsA(AActor::StaticClass()))
 		{
 			const FVector RightVector = GetActorRightVector();
-			AvoidanceOffset = RightVector * 300.0f;
+			AvoidanceOffset = RightVector * 100.0f;
 		}
 	}
 	
@@ -230,7 +218,7 @@ void ARescuerAgent::PathOneWay()
 {
 	if (Path.IsEmpty())
 	{
-		bCanMove = false;
+		State = ERescuerStates::Wander;
 		OnTargetReached.Broadcast(this, bTargetIsCharacter);
 		return;
 	}
@@ -242,7 +230,28 @@ void ARescuerAgent::PathOneWay()
 
 	CachedLocation = Destination;
 
-	MoveArrival();
+	if (Path.Num() == 0)
+		MoveArrival();
+	else 
+		MoveSeek();
+}
+
+void ARescuerAgent::MoveSeek()
+{
+	const FVector DesiredVelocity = ((CachedLocation - this->GetActorLocation()).GetSafeNormal() * Player_Stats.MaxSpeed) + DetectAgentInFront();
+
+	const FVector Steering = DesiredVelocity - this->GetVelocity();
+
+	FRotator TargetRotation = DesiredVelocity.Rotation();
+	TargetRotation.Roll = 0.f;
+	TargetRotation.Pitch = 0.f;
+
+	const FRotator CurrentRotation = this->GetActorRotation();
+	const FRotator SmoothedRotation = FMath::RInterpTo(CurrentRotation, TargetRotation, GetWorld()->GetDeltaSeconds(), Player_Stats.RotationSpeed);
+
+	this->SetActorRotation(SmoothedRotation);
+
+	this->AddMovementInput(SmoothedRotation.Vector(), Steering.Size(), true);
 }
 
 void ARescuerAgent::MoveArrival()

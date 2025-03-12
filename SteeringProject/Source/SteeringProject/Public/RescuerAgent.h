@@ -55,6 +55,9 @@ protected:
 	void PathOneWay();
 
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
+	void MoveSeek();
+
+	UFUNCTION(BlueprintCallable, Category = "Navigation|Path")
 	void MoveArrival();
 
 	UFUNCTION(BlueprintCallable, Category = "Navigation|Costs")
@@ -71,9 +74,6 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Initialisation")
 	ANavigationPoint* EndPoint;
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Initialisation")
-	bool bIsFindingPath;
 	
 	/** Queues */
 	
@@ -93,13 +93,7 @@ protected:
 	TArray<ANavigationPoint*> Path;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
-	ANavigationPoint* CurrentPathNode;	
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
-	bool bIsBuildingPath;
-
-	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
-	bool bCanMove;
+	ANavigationPoint* CurrentPathNode;
 
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Path")
 	bool bTargetIsCharacter;
@@ -110,6 +104,9 @@ protected:
 	/** Movements */
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite, Category = "Navigation|Movement")
 	FVector Velocity;
+
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Navigation|Initialisation")
+	ERescuerStates State;
 	
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Infos")

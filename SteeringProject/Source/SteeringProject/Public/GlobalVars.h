@@ -23,6 +23,18 @@ enum class EBehaviours : uint8
 	TwoWay UMETA(DisplayName = "TwoWay"),
 };
 
+/** 
+* Enum to control every states of the Rescuer Agent
+*/
+UENUM(BlueprintType)
+enum class ERescuerStates : uint8
+{
+	Wander UMETA(DisplayName = "Wander"),
+	SearchPath UMETA(DisplayName = "Search Path"),
+	BuildPath UMETA(DisplayName = "Build Path"),
+	Move UMETA(DisplayName = "Move"),
+};
+
 UENUM(BlueprintType)
 enum class ESliders : uint8
 {
