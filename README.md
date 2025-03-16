@@ -49,26 +49,23 @@ L’objectif de ce lab est d’implémenter une "**steering library**" permettan
 
 ## 🚑 Lab 2 : Rescuer Simulation
 
-> _WIP_
-
 ### 🎯 Objectif Rescuer
 
 Ce lab simule une **opération de sauvetage** dans une ville où des **NPCs doivent secourir** des victimes et les **emmener** à l’hôpital.
 
-**📌 Les NPCs doivent agir intelligemment, sans communication avec le joueur, et optimiser leur comportement.**
+**📌 Les NPCs doivent agir intelligemment et optimiser leur comportement.**
 
 ### 🧠 Comportements et algorithmes encours d'implémentation
 
 #### 1️⃣ Planification et pathfinding
 
-- **🚧 Un planner** choisit la victime à sauver en priorité.
-- **✅ Un pathfinding** algorithm (A\* ou Dijkstra) trouve le chemin optimal.
-- **🚧 NPCchange d’objectif** si une victime est sauvée avant son arrivée.
+- **✅ Un planner** choisit la victime à sauver en priorité.
+- **✅ Un pathfinding** algorithm (Astar) trouve le chemin optimal.
 
 #### 2️⃣ Déplacement et évitement
 
 - **✅ Mouvement** basé sur le **Steering Lab** (Seek, Arrival, etc.).
-- **🚧 Évitement** de collisions avec d’autres NPCs et victimes.
+- **✅ Évitement** de collisions avec d’autres NPCs et victimes.
 - **✅ Navigation fluide**.
 
 ## 💾 Installation
